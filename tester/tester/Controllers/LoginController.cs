@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using tester.Models;
 
 namespace tester.Controllers
 {
@@ -11,11 +12,16 @@ namespace tester.Controllers
         // GET: Login
         //httpPost werk als iemand iets submit
         [HttpPost]
-        public ActionResult Index(string username)
+        public ActionResult Index(string username, string password)
         {
             if ("Rechard".Equals(username) == true)
+            {                
+                return RedirectToAction("Home", "Login");
+            }
+
+            Models.Database.Login(username, password);
+            if (Models.Database.Login(username, password) == true)
             {
-                
                 return RedirectToAction("Home", "Login");
             }
 
