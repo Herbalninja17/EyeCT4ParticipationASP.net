@@ -13,11 +13,12 @@ namespace tester.Controllers
         [HttpPost]
         public ActionResult Index(string username)
         {
-            ViewBag.user = username;
-            if ("ya".Equals(username) == true)
+            if ("Rechard".Equals(username) == true)
             {
+                
                 return RedirectToAction("Home", "Login");
             }
+
             return View();
         }
 
@@ -29,7 +30,7 @@ namespace tester.Controllers
         }
 
         public ActionResult Home()
-        {
+        {            
             return View();
         }
     }
