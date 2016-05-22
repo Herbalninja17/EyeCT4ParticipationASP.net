@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace tester.Controllers
+{
+    public class LoginController : Controller
+    {
+        // GET: Login
+        //httpPost werk als iemand iets submit
+        [HttpPost]
+        public ActionResult Index(string username)
+        {
+            ViewBag.user = username;
+            if ("ya".Equals(username) == true)
+            {
+                return RedirectToAction("Home", "Login");
+            }
+            return View();
+        }
+
+        //httpGet werkt als iemand het pagine view, refresh enzo
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Home()
+        {
+            return View();
+        }
+    }
+}
