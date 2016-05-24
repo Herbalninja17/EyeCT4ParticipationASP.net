@@ -9,11 +9,14 @@ namespace tester.Controllers
 {
     public class LoginController : Controller
     {
+        string naam;
         // GET: Login
         //httpPost werk als iemand iets submit
         [HttpPost]
         public ActionResult Index(string username, string password)
         {
+            ViewBag.user = username;
+            naam = "q";
             if ("Rechard".Equals(username) == true)
             {                
                 return RedirectToAction("Home", "Login");
@@ -22,6 +25,7 @@ namespace tester.Controllers
             Models.Database.Login(username, password);
             if (Models.Database.Login(username, password) == true)
             {
+
                 return RedirectToAction("Home", "Login");
             }
 
@@ -36,7 +40,10 @@ namespace tester.Controllers
         }
 
         public ActionResult Home()
-        {            
+        {
+
+            string n = "4";
+            ViewBag.adminid = "3";
             return View();
         }
     }

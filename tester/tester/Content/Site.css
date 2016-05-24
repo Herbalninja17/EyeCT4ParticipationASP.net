@@ -1,13 +1,15 @@
 ﻿body 
 {    
+    
        font-family: 'open sans', sans-serif;
        overflow: scroll;
        overflow-x: hidden;
-       background-image: url("http://s32.postimg.org/b5wu13lrp/jp_Lr1yq.jpg");
+       /*background-image: url("http://s32.postimg.org/b5wu13lrp/jp_Lr1yq.jpg");*/
+       /*background-image: url("http://randomwallpapers.net/lamborghini-aventador-rims-cars-1920x1080-wallpaper414577.jpg");*/
+       background-image: url("https://zenforlife.files.wordpress.com/2012/06/zen-for-life.jpg");
        background-repeat: no-repeat;
        background-attachment: fixed;
        background-size: cover;
-
 }
 
 ::-webkit-scrollbar 
@@ -28,8 +30,10 @@
     margin-top: -8px;
     margin-left: -8px;    
     height: 50px;
-    background-color: deeppink;
+    background-color: black;
 }
+
+
 
 .menu
 {
@@ -49,7 +53,7 @@
 .tab
 {
     margin-left: +5px;
-    color: black;
+    color: gray;
     text-decoration: none;
 }
 
