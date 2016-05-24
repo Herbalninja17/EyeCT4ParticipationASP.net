@@ -1,22 +1,19 @@
 ﻿
 @{
     ViewBag.Title = "Index";
+
 }
 
 <h2>EyeCT4Participation</h2>
 
 @using (@Html.BeginForm())
 {
-
+    <div class="error">@ViewBag.loginfail<br></div>
     <input type="text" name="username" placeholder="Username or email"><br>
-    <input type="text" name="batty" placeholder="bitch" value="@ViewBag.user"><br>
     <input type="password" name="password" placeholder="Password"><br>
     <input type="submit" name="Login" value="Login" />
-    if (ViewBag.user == "yo")
-    {
-        <input type="button" name="Home" value="Home" onclick="location.href='@Url.Action("Home", "Login")'" />
-    }
-    
+    <input type="button" name="Register" value="Register" onclick="location.href='@Url.Action("Register", "Login")'" />
+
+
 
 }
-

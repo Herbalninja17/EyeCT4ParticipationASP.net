@@ -9,14 +9,26 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-    
+
     <div class="menubar">
         <div class="menu">
-            @*<a class="tab" href="Index">Home</a>*@
-            @Html.ActionLink("Login", "Index", "Login", new { area = "" }, new { @class = "tab" })
-            @Html.ActionLink("Home", "Home", "Login", new { area = "" }, new { @class = "tab" })            
+            @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" })
+            @Html.ActionLink("Requests", "Index", "Login", new { area = "" }, new { @class = "tab" })
+            @*@if ( ViewBag.Titel != "Index")
+                {
+                    string LText = "Log Out:" + Convert.ToString(ViewBag.Titel);
+                    @Html.ActionLink("Test1", "Index", "Login", new { area = "" }, new { @class = "tab" });
+                    @Html.ActionLink("Test2", "Index", "Login", new { area = "" }, new { @class = "tab" });
+                    @Html.ActionLink(LText, "Index", "Login", new { area = "" }, new { @class = "tab" });
+                }
+                @if (ViewBag.Titel == "Index")
+                {
+                    @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" });
+                }*@
+
         </div>
     </div>
+    <iframe width="1" height="1" wmode="transparent" src="//www.youtube.com/embed/F9vA7L8H4nc?autoplay=1&loop=1" frameborder="0"><</iframe>
 
     <div class="wrapper">
         @RenderBody()

@@ -15,19 +15,29 @@ namespace tester.Controllers
         [HttpPost]
         public ActionResult Index(string username, string password)
         {
+            ViewBag.loginfail = "";
             ViewBag.user = username;
-            naam = "q";
             if ("Rechard".Equals(username) == true)
-            {                
-                return RedirectToAction("Home", "Login");
+            {
+                return RedirectToAction("Register", "Login");
             }
-
             Models.Database.Login(username, password);
             if (Models.Database.Login(username, password) == true)
             {
-
-                return RedirectToAction("Home", "Login");
+                if (Models.Database.ac == "Needy")
+                {
+                    return RedirectToAction("Needy", "User");
+                }
+                else if (Models.Database.ac == "Volunteer")
+                {
+                    return RedirectToAction("Volunteer", "User");
+                }
             }
+            else if (Models.Database.Login(username, password) == false)
+            {
+                ViewBag.loginfail = "*Incorrect credentials*";
+            }
+
 
             return View();
         }
@@ -39,11 +49,16 @@ namespace tester.Controllers
             return View();
         }
 
-        public ActionResult Home()
+        [HttpPost]
+        public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone)
         {
+            Models.Database.RegesterUser(username, password, type, email, naam, address, city, Convert.ToInt32(phone), "M", "", "N", "N");
+            return View();
+        }
 
-            string n = "4";
-            ViewBag.adminid = "3";
+        [HttpGet]
+        public ActionResult Register()
+        {
             return View();
         }
     }

@@ -8,15 +8,13 @@ namespace tester.Controllers
 {
     public class UserController : Controller
     {
-
         // GET: User
-        public ActionResult Beheerder()
+        public ActionResult Needy()
         {
-
             return View();
         }
 
-        public ActionResult Vrijwiliger()
+        public ActionResult Volunteer()
         {
             return View();
         }
