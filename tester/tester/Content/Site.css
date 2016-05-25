@@ -33,6 +33,11 @@
     background-color: black;
 }
 
+.error
+{
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* make scrollbar invisible */
+}
 
 
 .menu
