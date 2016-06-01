@@ -1,101 +1,112 @@
-﻿body 
-{    
-    
-       font-family: 'open sans', sans-serif;
-       overflow: scroll;
-       overflow-x: hidden;
-       /*background-image: url("http://s32.postimg.org/b5wu13lrp/jp_Lr1yq.jpg");*/
-       /*background-image: url("http://randomwallpapers.net/lamborghini-aventador-rims-cars-1920x1080-wallpaper414577.jpg");*/
-       background-image: url("https://zenforlife.files.wordpress.com/2012/06/zen-for-life.jpg");
-       background-repeat: no-repeat;
-       background-attachment: fixed;
-       background-size: cover;
+﻿body {
+    font-family: 'open sans', sans-serif;
+    overflow: scroll;
+    overflow-x: hidden;
+    /*background-image: url("http://s32.postimg.org/b5wu13lrp/jp_Lr1yq.jpg");*/
+    /*background-image: url("http://randomwallpapers.net/lamborghini-aventador-rims-cars-1920x1080-wallpaper414577.jpg");*/
+    background-image: url("https://zenforlife.files.wordpress.com/2012/06/zen-for-life.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
-::-webkit-scrollbar 
-{
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* make scrollbar invisible */
+::-webkit-scrollbar {
+    width: 0px; /* remove scrollbar space */
+    background: transparent; /* make scrollbar invisible */
 }
 
 /*Raphael CSS for Admin*/
 .boxed {
-  border: 1px solid green ;
+    border: 1px solid green;
     width: 600px;
     height: 600px;
-    float: right
+    float: right;
 }
 
-.buttons
-{
+.Profilediv1 {
+    float: left;
+    width: 39%;
+    height: 60vh;
+}
+
+.Profilediv2 {
+    border: 1px solid black;
+    float: right;
+    width: 60%;
+    height: 60vh;
+}
+
+.Profilediv3 {
+    clear: both;
+    height: 37vh;
+}
+
+.Profilediv4 {
+    border: 1px solid black;
+    width: 60vw;
+    height: 30vh;
+}
+
+
+.buttons {
     padding-bottom: 23px;
     float: left;
 }
 
-#contentBox
-{
+#contentBox {
     width: 1000px;
     height: 100px;
 }
 
-.body-content 
-{
-    color: red;        
+.body-content {
+    color: red;
 }
 
-.menubar
-{   
+.menubar {
     width: 100vw;
     margin-top: -8px;
-    margin-left: -8px;    
+    margin-left: -8px;
     height: 50px;
     background-color: black;
 }
 
-.error
-{
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* make scrollbar invisible */
+.error {
+    width: 0px; /* remove scrollbar space */
+    background: transparent; /* make scrollbar invisible */
 }
 
 
-.menu
-{
+.menu {
     width: 60%;
     margin: auto;
     padding-top: 15px;
 }
 
-.wrapper
-{
-    width: 60%;    
-    margin: 10px auto ;
+.wrapper {
+    width: 60%;
+    margin: 10px auto;
     background-color: transparent;
     padding: 0px;
 }
 
-.tab
-{
+.tab {
     margin-left: +5px;
     color: gray;
     text-decoration: none;
 }
 
-.tab:hover
-{
-    color: white;
-}
-.tab:active
-{
-    color: purple;
-}
+    .tab:hover {
+        color: white;
+    }
 
-.homevid
-{
+    .tab:active {
+        color: purple;
+    }
+
+.homevid {
     width: 100%;
     height: 500px;
     margin-top: 0px;
-     
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -104,5 +115,3 @@ select,
 textarea {
     max-width: 280px;
 }
-
-

@@ -61,5 +61,11 @@ namespace tester.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Profile()
+        {
+            return View();
+        }
     }
 }

@@ -135,6 +135,7 @@
     <Content Include="Views\User\Needy.cshtml" />
     <Content Include="Views\User\Volunteer.cshtml" />
     <Content Include="Views\User\Admin.cshtml" />
+    <Content Include="Views\Login\Profile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
