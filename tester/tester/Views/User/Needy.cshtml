@@ -5,3 +5,19 @@
 
 <h2>Needy</h2>
 
+@using (@Html.BeginForm())
+{
+    <textarea rows="5" cols="50" name="Hulpvraag" placeholder="Vul uw hulpvraag in."></textarea> <br>
+    <input type="text" name="Locatie" placeholder="Vul de locatie van uw uitje."><br>
+    <input type="text" name="Vrijwilligers nodig" placeholder="Vrijwilligers nodig."><br>
+    <input type="text" name="Transporttype" placeholder="Uw gewenste transporttype."><br>
+    <input type="text" name="Reistijd" placeholder="Geef de reistijd."><br>
+    <input type="text" name="Starttijd" placeholder="Geef de starttijd."><br>
+    <input type="text" name="Eindtijd" placeholder="Geef de eindtijd."><br>
+    <input type="checkbox" id="urgent" name="Urgent" value="Urgent" /> <label for="urgent">Urgent</label> <br>
+    <input type = "submit" name = "Zet uit" value = "Zet uit" />
+
+    <br /><br /><br />
+    <textarea rows="5" cols="50" name="mijn_Hulpvragen" placeholder="Uw hulpvragen staan hier."></textarea> <br>
+
+}
