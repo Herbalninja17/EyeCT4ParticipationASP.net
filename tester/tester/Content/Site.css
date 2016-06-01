@@ -18,6 +18,25 @@
     background: transparent;  /* make scrollbar invisible */
 }
 
+/*Raphael CSS for Admin*/
+.boxed {
+  border: 1px solid green ;
+    width: 600px;
+    height: 600px;
+    float: right
+}
+
+.buttons
+{
+    padding-bottom: 23px;
+    float: left;
+}
+
+#contentBox
+{
+    width: 1000px;
+    height: 100px;
+}
 
 .body-content 
 {
