@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+ 
+}
+
+<h2>Admin</h2>
+
+@using (@Html.BeginForm())
+{
+    <div>
+        <div class="boxed">
+            This text is enclosed in a box.
+        </div>
+
+        <div id="buttons">
+            <input type="button" name="reviews" value="reviews"><br>
+            <input type="button" name="requests" value="requests"><br>
+            <input type="button" name="comments" value="comments"><br>
+            <input type="button" name="reportedReviews" value="Reported Reviews"><br>
+            <input type="button" name="reportedRequests" value="Reported Reviews"><br>
+            <input type="button" name="reportedComments" value="Reported Comments"><br>
+            <input type="button" name="logOut" value="Logout"><br>
+        </div>
+    </div>
+}
