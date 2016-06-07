@@ -145,6 +145,8 @@ namespace tester.Models
 
         // GetReviews admin <Raphael>
         public static List<string> reviewsListAdmin = new List<string>();
+        
+        
         public static bool getReviewAdmin()
         {
             bool ok = false;
