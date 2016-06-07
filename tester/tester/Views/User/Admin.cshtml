@@ -1,4 +1,6 @@
-﻿
+﻿@using tester.Models;
+
+
 @{
     ViewBag.Title = "Admin";
  
@@ -10,7 +12,17 @@
 {
     <div>
         <div class="boxed">
+           
+
             This text is enclosed in a box.
+            @foreach (string item in Database.reviewsListAdmin)
+            {
+                <div>
+                    @item
+                    <hr />
+                </div>
+            }
+         
         </div>
 
         <div id="buttons">
