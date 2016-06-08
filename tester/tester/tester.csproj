@@ -126,7 +126,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\Needy.cs" />
     <Compile Include="Models\testerContext.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
