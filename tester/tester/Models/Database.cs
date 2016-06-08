@@ -117,9 +117,9 @@ namespace tester.Models
             }
         } //goodluck! </Rechard>  
 
-        // CHATHALEN <RECHARD>
-
+        // chat chat chat chat chat chat chat chat chat chat chatc hat chat
         public static List<string> chathistory = new List<string>();
+        // CHATHALEN <RECHARD>
 
         public static string chatbox(int needy, int volunteer)
         {
@@ -187,6 +187,6 @@ namespace tester.Models
                 Console.WriteLine(ex.Message);
             }
         }
-
+        // chat chat chat chat chat chat chat chat chat chat chatc hat chat
     }
 }
