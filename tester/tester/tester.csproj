@@ -43,12 +43,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -120,16 +114,13 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database.cs" />
-    <Compile Include="Models\Needy.cs" />
-    <Compile Include="Models\testerContext.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +138,10 @@
     <Content Include="Views\User\Volunteer.cshtml" />
     <Content Include="Views\User\Admin.cshtml" />
     <Content Include="Views\Login\Profile.cshtml" />
+    <Content Include="Views\Chat\Chatbox.cshtml" />
+    <Content Include="Views\Admin\Chats.cshtml" />
+    <Content Include="Views\Admin\Reviews.cshtml" />
+    <Content Include="Views\Admin\Requests.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -157,7 +152,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
