@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Chatbox";
+}
+
+<h2>Chatbox</h2>
+
+
+ @using (@Html.BeginForm())
+ {
+    <input type="text" name="n" placeholder="n" value="3" disabled><br>
+    <input type="text" name="v" placeholder="v" value="2"><br>
+     foreach (string chat in tester.Models.Database.chathistory)
+     {
+            <li><b>@chat.ToString()</b></li>
+     }
+     <input type="submit">
+}

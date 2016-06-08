@@ -13,20 +13,10 @@
     <div class="menubar">
         <div class="menu">
             @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" })
-            @Html.ActionLink("Requests", "Index", "Login", new { area = "" }, new { @class = "tab" })
-            @Html.ActionLink("Hulpbehoevende", "Needy", "User", new { area = "" }, new { @class = "tab" })
-            @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
-            @*@if ( ViewBag.Titel != "Index")
-                {
-                    string LText = "Log Out:" + Convert.ToString(ViewBag.Titel);
-                    @Html.ActionLink("Test1", "Index", "Login", new { area = "" }, new { @class = "tab" });
-                    @Html.ActionLink("Test2", "Index", "Login", new { area = "" }, new { @class = "tab" });
-                    @Html.ActionLink(LText, "Index", "Login", new { area = "" }, new { @class = "tab" });
-                }
-                @if (ViewBag.Titel == "Index")
-                {
-                    @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" });
-                }*@
+            @Html.ActionLink("Requests", "", "", new { area = "" }, new { @class = "tab" })
+            @Html.ActionLink("Profile", "", "", new { area = "" }, new { @class = "tab" })
+            @Html.ActionLink("Inbox", "Chatbox", "Chat", new { area = "" }, new { @class = "tab" })
+            @Html.ActionLink("Username", "", "", new { area = "" }, new { @class = "tab" })
 
         </div>
     </div>
