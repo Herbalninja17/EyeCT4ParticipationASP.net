@@ -43,6 +43,7 @@ namespace tester.Models
         //Rechard
         public static string acnaam = "";
         public static string ac;
+        public static int acid;
         public static bool Login(string username, string password)
         {
             string result = "no";
@@ -64,6 +65,7 @@ namespace tester.Models
                         ac = acctype;
                         result = Convert.ToString(_Reader["Gebruikersnaam"]);
                         acnaam = result;
+                        acid = Convert.ToInt32(_Reader["GebruikerID"]);
                         if (result == username) { ok = true; }
                     }
                 }
@@ -185,6 +187,47 @@ namespace tester.Models
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        static User user;
+        public static User Profile(int acid)
+        {
+            
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT Gebruikersnaam, Email, Woonplaats, Adres, Telefoonnummer FROM gebruiker WHERE GebruikerID = :accid";
+                m_command.Parameters.Add("accid", OracleDbType.Int32).Value = acid;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    try
+                    {
+                        while (_Reader.Read())
+                        {
+                            string naam = Convert.ToString(_Reader["Gebruikersnaam"]);
+                            string email = Convert.ToString(_Reader["Email"]);
+                            string woonplaats = Convert.ToString(_Reader["Woonplaats"]);
+                            string adres = Convert.ToString(_Reader["Adres"]);
+                            int telefoon = Convert.ToInt32(_Reader["Telefoonnummer"]);
+                            user = new User(naam, email, woonplaats, adres, telefoon);
+                        }
+                    }
+                    catch (OracleException ex)
+                    {
+                        Database.CloseConnection();
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return user;
         }
     }
 

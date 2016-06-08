@@ -65,7 +65,27 @@ namespace tester.Controllers
         [HttpGet]
         public ActionResult Profile()
         {
-            return View();
+            ViewBag.naam = "";
+            ViewBag.email = "";
+            ViewBag.woonplaats = "";
+            ViewBag.adres = "";
+            ViewBag.telefoon = "";
+
+            if (Database.acid != null)
+            {
+                Database.Profile(Database.acid);
+                User user = Database.Profile(Database.acid);
+                ViewBag.naam = user.naam;
+                ViewBag.email = user.email;
+                ViewBag.woonplaats = user.woonplaats;
+                ViewBag.adres = user.adres;
+                ViewBag.telefoon = user.telefoonnummer;
+                return View();
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }
