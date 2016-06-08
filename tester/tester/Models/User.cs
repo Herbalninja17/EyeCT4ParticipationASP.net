@@ -7,18 +7,19 @@ namespace tester.Models
 {
     public class User
     {
-        public string name { get; set; }
-        public string address { get; set; }
-        public string city { get; set; }
-        public int phonenumber { get; set; }
+        public string naam { get; set; }
+        public string email { get; set; }
+        public string woonplaats { get; set; }
+        public string adres { get; set; }
+        public int telefoonnummer { get; set; }
 
-        public User(string name, string address, string city, int phonenumber)
+        public User(string naam, string email, string woonplaats, string adres, int telefoonnummer)
         {
-            this.name = name;
-            this.address = address;
-            this.city = city;
-            this.phonenumber = phonenumber;
+            this.naam = naam;
+            this.email = email;
+            this.woonplaats = woonplaats;
+            this.adres = adres;
+            this.telefoonnummer = telefoonnummer;
         }
     }
-}
 }
