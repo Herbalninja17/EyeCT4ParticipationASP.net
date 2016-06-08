@@ -71,7 +71,7 @@ namespace tester.Controllers
             ViewBag.adres = "";
             ViewBag.telefoon = "";
 
-            if (Database.acid != null)
+            if (Database.acid != 0)
             {
                 Database.Profile(Database.acid);
                 User user = Database.Profile(Database.acid);
