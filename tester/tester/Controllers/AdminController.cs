@@ -3,32 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using tester.Models;
 
 namespace tester.Controllers
 {
     public class AdminController : Controller
     {
-
-        List<string> content = new List<string>();
         //
         // GET: /Admin/
-        public ActionResult Admin()
+        [HttpPost]
+        public ActionResult Chats(int x)
         {
-
-
             return View();
         }
 
         [HttpPost]
-        public ActionResult reviewsBTN()
+        public ActionResult Reviews(int x)
         {
-            Models.Database.getReviewAdmin();
-            foreach (string item in Database.reviewsListAdmin)
-            {
-                content.Add(item);
-            }
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Requests(int x)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Chats()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Reviews()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Requests()
+        {
+            return View();
+        }
+
+
 	}
 }

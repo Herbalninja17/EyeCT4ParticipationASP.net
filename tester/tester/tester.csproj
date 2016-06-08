@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -138,6 +139,9 @@
     <Content Include="Views\User\Admin.cshtml" />
     <Content Include="Views\Login\Profile.cshtml" />
     <Content Include="Views\Chat\Chatbox.cshtml" />
+    <Content Include="Views\Admin\Chats.cshtml" />
+    <Content Include="Views\Admin\Reviews.cshtml" />
+    <Content Include="Views\Admin\Requests.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
