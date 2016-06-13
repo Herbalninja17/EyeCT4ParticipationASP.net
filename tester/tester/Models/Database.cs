@@ -268,6 +268,48 @@ namespace tester.Models
             }
             return requests;
         }
+
+        public static void placeARequest(int accountid, string omschrijving, string locatie, int reistijd,
+            string vervoerType, string startDatum, string eindDatum, string urgent, int aantalVrijwilligers)
+        {
+            int this_hulpvraagID = 0;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT COUNT(HulpvraagID) from Hulpvraag";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        this_hulpvraagID = Convert.ToInt32(_Reader["COUNT(HulpvraagID)"]) + 1;
+                    }
+                }
+
+                m_command.CommandText =
+                    "INSERT INTO Hulpvraag(HulpvraagID, Omschrijving, Locatie, Reistijd, VervoerType, Startdatum, Einddatum, Urgent, AantalVrijwilligers, GebruikerID) VALUES(:HulpvraagID, :Omschrijving, :Locatie, :Reistijd, :Vervoertype, :Startdatum, :Einddatum, :Urgent, :AantalVrijwilligers, :GebruikerID)";
+
+                Command.Parameters.Add("HulpvraagID", OracleDbType.Int32).Value = this_hulpvraagID;
+                Command.Parameters.Add("Omschrijving", OracleDbType.Varchar2).Value = omschrijving;
+                Command.Parameters.Add("Locatie", OracleDbType.Varchar2).Value = locatie;
+                Command.Parameters.Add("Reistijd", OracleDbType.Int32).Value = reistijd;
+                Command.Parameters.Add("Vervoertype", OracleDbType.Varchar2).Value = vervoerType;
+                Command.Parameters.Add("Startdatum", OracleDbType.Varchar2).Value = startDatum;
+                Command.Parameters.Add("Einddatum", OracleDbType.Varchar2).Value = eindDatum;
+                Command.Parameters.Add("Urgent", OracleDbType.Char).Value = urgent;
+                Command.Parameters.Add("AantalVrijwilligers", OracleDbType.Int32).Value = aantalVrijwilligers;
+                Command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountid;
+
+                Command.ExecuteNonQuery();
+            }
+            catch (OracleException ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 
 

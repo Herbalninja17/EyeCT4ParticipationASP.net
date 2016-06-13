@@ -21,7 +21,7 @@ namespace tester.Controllers
         }
 
         [HttpPost]
-        public ActionResult Requests(int x)
+        public ActionResult Requests(string omschrijving, string locatie, int aantalVrijwilligers, string vervoerstype, string reistijd, string begintijd, string eindtijd, char urgent)
         {
             return View();
         }
