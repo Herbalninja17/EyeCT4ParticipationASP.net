@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Oracle.ManagedDataAccess.Client;
@@ -189,10 +191,8 @@ namespace tester.Models
             }
         }
 
-        // Profile <OLAF>
-        public static User user;
-        public static User userBekijken;
-        public static void Profile(int acid, bool a)
+        static User user;
+        public static User Profile(int acid)
         {
             
             try
@@ -214,14 +214,7 @@ namespace tester.Models
                             string woonplaats = Convert.ToString(_Reader["Woonplaats"]);
                             string adres = Convert.ToString(_Reader["Adres"]);
                             int telefoon = Convert.ToInt32(_Reader["Telefoonnummer"]);
-                            if (a == true)
-                            {
-                                user = new User(naam, email, woonplaats, adres, telefoon);
-                            }
-                            else if (a == false)
-                            {
-                                userBekijken = new User(naam, email, woonplaats, adres, telefoon);
-                            }
+                            user = new User(naam, email, woonplaats, adres, telefoon);
                         }
                     }
                     catch (OracleException ex)
@@ -236,43 +229,88 @@ namespace tester.Models
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
+            return user;
         }
 
-        //Review voor profile door <OLAF>
-        public static List<Review> reviewsProfile = new List<Review>();
-        public static void getMyReviews(int acid)
+        public static List<Request> GetRequests(int ID)
         {
+            List<Request> requests = new List<Request>();
+
             try
             {
-                reviewsProfile.Clear();
-                OpenConnection();
-                m_command = new OracleCommand();
-                m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT r.reviewID, r.beoordeling, r.opmerkingen, r.needyID, n.gebruikersNaam AS needyNaam, r.volunteerID, v.gebruikersNaam AS volunteerNaam FROM Review r, Gebruiker n, Gebruiker v WHERE r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.needyID = :acid OR r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.volunteerID = :acid";
-                m_command.Parameters.Add("acid", OracleDbType.Int32).Value = acid;
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE GEBRUIKERID = :ID ORDER BY HULPVRAAGID";
+                m_command.Parameters.Add("ID", OracleDbType.Int32).Value = ID;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
-                    try
+                    if (_Reader.HasRows)
                     {
                         while (_Reader.Read())
                         {
-                            Review review = new Review(Convert.ToInt32(_Reader["reviewID"]), Convert.ToString(_Reader["beoordeling"]), Convert.ToString(_Reader["opmerkingen"]), Convert.ToInt32(_Reader["needyID"]), Convert.ToString(_Reader["needyNaam"]), Convert.ToInt32(_Reader["volunteerID"]), Convert.ToString(_Reader["volunteerNaam"]));
-                            reviewsProfile.Add(review);
+                            CultureInfo provider = CultureInfo.InvariantCulture;
+                            string start = Convert.ToString(_Reader["STARTDATUM"]);
+                            string end = Convert.ToString(_Reader["EINDDATUM"]);
+                            DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
+                            DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
+                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
+                            requests.Add(request);
                         }
-                    }
-                    catch (OracleException ex)
-                    {
-                        Database.CloseConnection();
-                        Console.WriteLine(ex.Message);
                     }
                 }
             }
             catch (OracleException ex)
             {
                 Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return requests;
+        }
+
+        public static void placeARequest(int accountid, string omschrijving, string locatie, int reistijd,
+            string vervoerType, string startDatum, string eindDatum, string urgent, int aantalVrijwilligers)
+        {
+            int this_hulpvraagID = 0;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT COUNT(HulpvraagID) from Hulpvraag";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        this_hulpvraagID = Convert.ToInt32(_Reader["COUNT(HulpvraagID)"]) + 1;
+                    }
+                }
+
+                m_command.CommandText =
+                    "INSERT INTO Hulpvraag(HulpvraagID, Omschrijving, Locatie, Reistijd, VervoerType, Startdatum, Einddatum, Urgent, AantalVrijwilligers, GebruikerID) VALUES(:HulpvraagID, :Omschrijving, :Locatie, :Reistijd, :Vervoertype, :Startdatum, :Einddatum, :Urgent, :AantalVrijwilligers, :GebruikerID)";
+
+                Command.Parameters.Add("HulpvraagID", OracleDbType.Int32).Value = this_hulpvraagID;
+                Command.Parameters.Add("Omschrijving", OracleDbType.Varchar2).Value = omschrijving;
+                Command.Parameters.Add("Locatie", OracleDbType.Varchar2).Value = locatie;
+                Command.Parameters.Add("Reistijd", OracleDbType.Int32).Value = reistijd;
+                Command.Parameters.Add("Vervoertype", OracleDbType.Varchar2).Value = vervoerType;
+                Command.Parameters.Add("Startdatum", OracleDbType.Varchar2).Value = startDatum;
+                Command.Parameters.Add("Einddatum", OracleDbType.Varchar2).Value = eindDatum;
+                Command.Parameters.Add("Urgent", OracleDbType.Char).Value = urgent;
+                Command.Parameters.Add("AantalVrijwilligers", OracleDbType.Int32).Value = aantalVrijwilligers;
+                Command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountid;
+
+                Command.ExecuteNonQuery();
+            }
+            catch (OracleException ex)
+            {
+
                 Console.WriteLine(ex.Message);
             }
         }
     }
+
+
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace tester.Models
 {
-    public class Needy : User
+    public class Reaction
     {
     }
 }
