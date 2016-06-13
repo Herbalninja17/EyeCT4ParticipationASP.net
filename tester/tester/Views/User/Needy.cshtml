@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<tester.Models.Request>
 @{
     ViewBag.Title = "Needy";
 }
@@ -21,7 +21,17 @@
     //Wat enters om het netter te maken.
 
     <br /><br /><br />
-    //Al de hulpvragen van één hulpbehoevende.
-    <textarea rows="5" cols="50" name="mijn_Hulpvragen" placeholder="Uw hulpvragen staan hier."></textarea> <br>
+}
 
+@*Al de hulpvragen van één hulpbehoevende.*@
+@foreach (var hulpvraag in tester.Models.Database.GetRequests(tester.Models.Database.acid))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@hulpvraag.description</h3>
+        </div>
+        <div class="panel-body">
+            @hulpvraag.startDate
+        </div>
+    </div>
 }

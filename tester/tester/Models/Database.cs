@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Oracle.ManagedDataAccess.Client;
@@ -228,6 +230,43 @@ namespace tester.Models
                 Console.WriteLine(ex.Message);
             }
             return user;
+        }
+
+        public static List<Request> GetRequests(int ID)
+        {
+            List<Request> requests = new List<Request>();
+
+            try
+            {
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE GEBRUIKERID = :ID ORDER BY HULPVRAAGID";
+                m_command.Parameters.Add("ID", OracleDbType.Int32).Value = ID;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    if (_Reader.HasRows)
+                    {
+                        while (_Reader.Read())
+                        {
+                            CultureInfo provider = CultureInfo.InvariantCulture;
+                            string start = Convert.ToString(_Reader["STARTDATUM"]);
+                            string end = Convert.ToString(_Reader["EINDDATUM"]);
+                            DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
+                            DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
+                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
+                            requests.Add(request);
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return requests;
         }
     }
 
