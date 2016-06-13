@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<tester.Models.Review>
+@{
     ViewBag.Title = "Profile";
 }
 
@@ -16,6 +17,21 @@
     </div>
     <div class="Profilediv2">
         My reviews:
+        <div class="myreviews">
+            <ul>
+                @if (ViewBag.naam != string.Empty && ViewBag.reviews != string.Empty)
+                {
+                    foreach (var item in Model)
+                    {
+                        <li>
+                            @item.opmerkingen<br>
+                            Door @Html.ActionLink(item.needyName, "Profileb", "Login", new { acID = item.needyID}, null) over @Html.ActionLink(item.volunteerName, "Profileb", "Login", new { acID = item.volunteerID}, null)<br>
+                            Beoordeling: @item.beoordeling
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
     </div>
     <div class="Profilediv3">
         About me:

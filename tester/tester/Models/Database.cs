@@ -189,8 +189,10 @@ namespace tester.Models
             }
         }
 
-        static User user;
-        public static User Profile(int acid)
+        // Profile <OLAF>
+        public static User user;
+        public static User userBekijken;
+        public static void Profile(int acid, bool a)
         {
             
             try
@@ -212,7 +214,14 @@ namespace tester.Models
                             string woonplaats = Convert.ToString(_Reader["Woonplaats"]);
                             string adres = Convert.ToString(_Reader["Adres"]);
                             int telefoon = Convert.ToInt32(_Reader["Telefoonnummer"]);
-                            user = new User(naam, email, woonplaats, adres, telefoon);
+                            if (a == true)
+                            {
+                                user = new User(naam, email, woonplaats, adres, telefoon);
+                            }
+                            else if (a == false)
+                            {
+                                userBekijken = new User(naam, email, woonplaats, adres, telefoon);
+                            }
                         }
                     }
                     catch (OracleException ex)
@@ -227,9 +236,43 @@ namespace tester.Models
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
-            return user;
+        }
+
+        //Review voor profile door <OLAF>
+        public static List<Review> reviewsProfile = new List<Review>();
+        public static void getMyReviews(int acid)
+        {
+            try
+            {
+                reviewsProfile.Clear();
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT r.reviewID, r.beoordeling, r.opmerkingen, r.needyID, n.gebruikersNaam AS needyNaam, r.volunteerID, v.gebruikersNaam AS volunteerNaam FROM Review r, Gebruiker n, Gebruiker v WHERE r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.needyID = :acid OR r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.volunteerID = :acid";
+                m_command.Parameters.Add("acid", OracleDbType.Int32).Value = acid;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    try
+                    {
+                        while (_Reader.Read())
+                        {
+                            Review review = new Review(Convert.ToInt32(_Reader["reviewID"]), Convert.ToString(_Reader["beoordeling"]), Convert.ToString(_Reader["opmerkingen"]), Convert.ToInt32(_Reader["needyID"]), Convert.ToString(_Reader["needyNaam"]), Convert.ToInt32(_Reader["volunteerID"]), Convert.ToString(_Reader["volunteerNaam"]));
+                            reviewsProfile.Add(review);
+                        }
+                    }
+                    catch (OracleException ex)
+                    {
+                        Database.CloseConnection();
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
         }
     }
-
-
 }
