@@ -5,7 +5,7 @@ using System.Web;
 
 namespace tester.Models
 {
-    public class User
+    public abstract class User
     {
         public string naam { get; set; }
         public string email { get; set; }

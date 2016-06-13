@@ -120,8 +120,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\admin.cs" />
+    <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\ChatHistory.cs" />
     <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\Needy.cs" />
+    <Compile Include="Models\Reaction.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
