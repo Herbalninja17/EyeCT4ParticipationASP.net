@@ -52,7 +52,7 @@ namespace tester.Controllers
         [HttpPost]
         public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone)
         {
-            Models.Database.RegesterUser(username, password, type, email, naam, address, city, Convert.ToInt32(phone), "M", "", "N", "N");
+            Models.Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", "", "N", "N");
             return View();
         }
 
