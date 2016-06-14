@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<tester.Models.Request>
 @{
     ViewBag.Title = "Needy";
 }
@@ -7,6 +7,7 @@
 
 @using (@Html.BeginForm())
 {
+    //Nieuwe hulpvraag uitzetten lay-out.
     <textarea rows="5" cols="50" name="Hulpvraag" placeholder="Vul uw hulpvraag in."></textarea> <br>
     <input type="text" name="Locatie" placeholder="Vul de locatie van uw uitje."><br>
     <input type="text" name="Vrijwilligers nodig" placeholder="Vrijwilligers nodig."><br>
@@ -17,7 +18,26 @@
     <input type="checkbox" id="urgent" name="Urgent" value="Urgent" /> <label for="urgent">Urgent</label> <br>
     <input type = "submit" name = "Zet uit" value = "Zet uit" />
 
-    <br /><br /><br />
-    <textarea rows="5" cols="50" name="mijn_Hulpvragen" placeholder="Uw hulpvragen staan hier."></textarea> <br>
+    //Wat enters om het netter te maken.
 
+    <br /><br /><br />
+}
+
+@*Al de hulpvragen van één hulpbehoevende.*@
+@foreach (var hulpvraag in tester.Models.Database.GetRequests(tester.Models.Database.acid))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@hulpvraag.description</h3>
+        </div>
+        <div class="panel-body">
+            <b>Locatie: </b>@hulpvraag.location <br />
+            <b>Vervoerstype gewenst: </b>@hulpvraag.transportType <br />
+            <b>Aantal vrijwilligers gewenst: </b>@hulpvraag.totalVolunteer <br />
+            <b>Begintijd: </b>@hulpvraag.startDate <br />
+            <b>Eindtijd: </b>@hulpvraag.endDate <br />
+            <b>Is urgent: </b>@hulpvraag.urgency 
+            <br /><br />
+        </div>
+    </div>
 }

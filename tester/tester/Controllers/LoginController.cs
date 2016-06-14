@@ -73,19 +73,53 @@ namespace tester.Controllers
 
             if (Database.acid != 0)
             {
-                Database.Profile(Database.acid);
-                User user = Database.Profile(Database.acid);
+                Database.Profile(Database.acid, true);
+                User user = Database.user;
                 ViewBag.naam = user.naam;
                 ViewBag.email = user.email;
                 ViewBag.woonplaats = user.woonplaats;
                 ViewBag.adres = user.adres;
                 ViewBag.telefoon = user.telefoonnummer;
-                return View();
+                Database.getMyReviews(Database.acid);
+                if (Database.reviewsProfile.Count == 0)
+                {
+                    ViewBag.reviews = string.Empty;
+                }
+                else
+                {
+                    ViewBag.reviews = "Y";
+                }
+                var myreviews = Database.reviewsProfile.OrderByDescending(x => x.reviewID);
+                return View(myreviews);
             }
             else
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult Profileb(int acID)
+        {
+
+            Database.Profile(acID, false);
+            User user = Database.userBekijken;
+            ViewBag.naam = user.naam;
+            ViewBag.email = user.email;
+            ViewBag.woonplaats = user.woonplaats;
+            ViewBag.adres = user.adres;
+            ViewBag.telefoon = user.telefoonnummer;
+            Database.getMyReviews(acID);
+            if (Database.reviewsProfile.Count == 0)
+            {
+                ViewBag.reviews = string.Empty;
+            }
+            else
+            {
+                ViewBag.reviews = "Y";
+            }
+            var myreviews = Database.reviewsProfile.OrderByDescending(x => x.reviewID);
+            return View(myreviews);
         }
     }
 }
