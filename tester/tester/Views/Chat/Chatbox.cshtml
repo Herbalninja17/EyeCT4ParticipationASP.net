@@ -8,11 +8,29 @@
 
  @using (@Html.BeginForm())
  {
-    <input type="text" name="n" placeholder="n" value="3"><br>
-    <input type="text" name="v" placeholder="v" value="2"><br>
-     foreach (string chat in tester.Models.Database.chathistory)
-     {
-            <li><b>@chat.ToString()</b></li>
-     }
-     <input type="submit">
-}
+          
+     
+    <div class="chatpage">
+        <div class="chatlist">
+            <input type="text" name="n" placeholder="n" value="3"><br>
+            <input type="text" name="v" placeholder="v" value="2"><br>
+            <input type="text" name="i" placeholder="i" ><br>
+        </div>
+
+        <div class="chatbox">
+            <div class="chat">
+                @foreach (string chat in tester.Models.Database.chathistory)
+                    {
+                    <b>@chat.ToString()</b><br>
+                    }               
+            </div>
+
+            <div class="reply">
+                <div class="r1"><input class="textbox" type="text" name="msg" placeholder="Write a reply" size="100"></div>
+                <div class="r2"><input class="submitbtn" type="submit" name="send" value="Send"></div>
+            </div>
+        </div>
+    </div>
+ }
+
+<br /><br />
