@@ -283,7 +283,7 @@ namespace tester.Models
                 OpenConnection();                   // om connection open te maken
                 m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
                 m_command.Connection = m_conn;      // een connection maken met het command
-                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE GEBRUIKERID = :ID ORDER BY HULPVRAAGID";
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE GEBRUIKERID = :ID AND ISVISIBLE = 'Y' ORDER BY HULPVRAAGID";
                 m_command.Parameters.Add("ID", OracleDbType.Int32).Value = ID;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
