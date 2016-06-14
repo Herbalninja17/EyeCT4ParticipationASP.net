@@ -272,7 +272,7 @@ namespace tester.Models
             }
             catch (OracleException ex)
             {
-                Database.CloseConnection();
+                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
         }
