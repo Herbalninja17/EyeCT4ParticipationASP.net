@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "reportedRequest";
+}
+
+<h2>Requests</h2>
+
+@using (@Html.BeginForm())
+{
+
+    <div>
+        <div class="boxed">
+            @foreach (string request in tester.Models.Database.reportedRequests)
+            {
+                <ul>
+                    <li><b>@request.ToString()</b></li>
+                </ul>
+            }
+
+        </div>
+        <div id="buttons">
+            <input type="button" name="reviewsBTN" value="reviews" onclick="location.href='@Url.Action("Reviews", "Admin")'"><br>
+            <input type="button" name="requestsBTN" value="requests" onclick="location.href='@Url.Action("Requests", "Admin")'"><br>
+            <input type="button" name="chatsBTN" value="chats" onclick="location.href='@Url.Action("Chats", "Admin")'"><br>
+            <input type="button" name="reportedReviewsBTN" value="Reported Reviews" onclick="location.href='@Url.Action("reportedReviews", "Admin")'"><br>
+            <input type="button" name="reportedRequestsBTN" value="Reported Requests" onclick="location.href='@Url.Action("reportedRequest", "Admin")'"><br>
+            <input type="button" name="reportedChatsBTN" value="Reported Chats" onclick="location.href='@Url.Action("reportedChats", "Admin")'"><br><br>
+            <input type="submit" name="command" value="Remove selected"><br><br>
+            <input type="submit" name="command" value="Ignore selected"><br><br>
+            <input type="button" name="logOutBTN" value="Logout" onclick="location.href='@Url.Action("Index", "Login")'"><br>
+        </div>
+    </div>
+}
