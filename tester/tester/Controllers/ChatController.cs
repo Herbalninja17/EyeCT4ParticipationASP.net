@@ -11,15 +11,16 @@ namespace tester.Controllers
     {
         // GET: Chat
         [HttpPost]
-        public ActionResult Chatbox(int n, int v)
+        public ActionResult Chatbox(int n, int v, string msg, int i)
         {
-            tester.Models.Database.chatbox(n, v);
+            tester.Models.Database.chatsend(n, v, msg, i);
             return View();
         }
 
         [HttpGet]
         public ActionResult Chatbox()
         {
+            tester.Models.Database.chatbox(3, 2);
             return View();
         }
     }
