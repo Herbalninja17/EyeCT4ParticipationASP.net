@@ -1,22 +1,21 @@
 ﻿
 @{
-    ViewBag.Title = "Requests";
+    ViewBag.Title = "reportedChat";
 }
 
-<h2>Requests</h2>
+<h2>Reported Chats</h2>
 
 @using (@Html.BeginForm())
 {
-   
+
     <div>
         <div class="boxed">
-            @foreach (string request in tester.Models.Database.reviewsRequests)
+            @foreach (string chat in tester.Models.Database.reportedChats)
             {
-                  <ul>
-                    <li><b>@request.ToString()</b></li>
+                <ul>
+                    <li><b>@chat.ToString()</b></li>
                 </ul>
             }
-
 
         </div>
         <div id="buttons">

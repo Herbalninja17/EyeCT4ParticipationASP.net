@@ -147,6 +147,9 @@
     <Content Include="Views\Admin\Reviews.cshtml" />
     <Content Include="Views\Admin\Requests.cshtml" />
     <Content Include="Views\Login\Profileb.cshtml" />
+    <Content Include="Views\Admin\reportedReviews.cshtml" />
+    <Content Include="Views\Admin\reportedChats.cshtml" />
+    <Content Include="Views\Admin\reportedRequest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

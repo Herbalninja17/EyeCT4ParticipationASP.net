@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Oracle.ManagedDataAccess.Client;
@@ -120,7 +119,6 @@ namespace tester.Models
                 Console.WriteLine(ex.Message);
             }
         } //goodluck! </Rechard>  
-
 
         // CHATHALEN <RECHARD>
         public static List<string> chathistory = new List<string>();
@@ -356,8 +354,6 @@ namespace tester.Models
         }
 
         //=============================================================================================================
-
-
         
          // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
         // Get ID from selected chat/review/request to change visibility/reported
@@ -396,7 +392,6 @@ namespace tester.Models
 
         }
 
-
         // Update table IsVisible/IsReported <Raphael>
         public static bool alterYorN(string COLUMN, int ID, string IDFromWich, string visibleOrReported, string YorN)
         {
@@ -422,13 +417,11 @@ namespace tester.Models
             return ok;
         }
 
-
-
-
         // GetReviews admin <Raphael>
         public static List<string> reviewsListAdmin = new List<string>();
         public static bool getReviewAdmin()
         {
+            reviewsListAdmin.Clear();
             bool ok = false;
             try
             {
@@ -463,8 +456,9 @@ namespace tester.Models
 
         // GetChat admin <Raphael>
         public static List<string> chats = new List<string>();
-        public static bool getChat(long UserID1, long UserID2)
+        public static bool getChat()
         {
+            chats.Clear();
             bool ok = false;
 
             try
@@ -499,39 +493,25 @@ namespace tester.Models
 
         // GetReported reviews admin <Raphael>
         public static List<string> reportedReviews = new List<string>();
-        public static bool getReportedReviews(string query)
+        public static bool getReportedReviews()
         {
             bool ok = false;
+            reportedReviews.Clear();
 
             try
             {
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = query;
+                m_command.CommandText = "SELECT * FROM REVIEW WHERE ISREPORTED = 'Y'";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
                     while (_Reader.Read())
                     {
-                        ////string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
-                        ////ac = acctype;
-                        ////int accID = Convert.ToInt32(_Reader["GebruikerID"]);
-                        ////acID = accID;
-                        ////result = Convert.ToString(_Reader["Gebruikersnaam"]);
-                        ////if (result == username) { ok = true; }
-                        //if (query == "SELECT OPMERKINGEN FROM REVIEW WHERE ISREPORTED = 'N'")
-                        //{
-                        //reported.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
-                        //}
-                        //if (query == "SELECT BERICHT FROM CHAT WHERE ISREPORTED = 'N'")
-                        //{
-                        //reported.Add(Convert.ToString(_Reader["BERICHT"]));
-                        //}
-                        //if (query == "SELECT OMSCHRIJVING FROM HULPVRAAG WHERE ISREPORTED = 'N'")
-                        //{
+                        
                         reportedReviews.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
-                        //}
+                       
                     }
                 }
             }
@@ -548,6 +528,7 @@ namespace tester.Models
         public static bool getreportedChat()
         {
             bool ok = false;
+            reportedChats.Clear();
 
             try
             {
@@ -581,16 +562,17 @@ namespace tester.Models
 
         // GetReported requests admin <Raphael>
         public static List<string> reportedRequests = new List<string>();
-        public static bool getReportedRequests(string query)
+        public static bool getReportedRequests()
         {
             bool ok = false;
+            reportedRequests.Clear();
 
             try
             {
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = query;
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISREPORTED = 'Y'";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
@@ -630,6 +612,7 @@ namespace tester.Models
         public static bool getRequests()
         {
             bool ok = false;
+            reviewsRequests.Clear();
             try
             {
                 OpenConnection();
