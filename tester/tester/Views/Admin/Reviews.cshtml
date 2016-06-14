@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Reviews";
 }
 
@@ -7,19 +6,19 @@
 
 @using (@Html.BeginForm())
 {
-    
+
     <div>
         <div class="boxed">
-            
+
             @foreach (string review in tester.Models.Database.reviewsListAdmin)
             {
                 <ul>
-                <li><b>@review.ToString()</b></li>
+                    <li><b>@review.ToString()</b></li>
                 </ul>
             }
 
         </div>
-       
+
         <div id="buttons">
             <input type="submit" name="reviewsBTN" value="reviews" onclick="location.href='@Url.Action("Reviews", "Admin")'"><br>
             <input type="button" name="requestsBTN" value="requests" onclick="location.href='@Url.Action("Requests", "Admin")'"><br>

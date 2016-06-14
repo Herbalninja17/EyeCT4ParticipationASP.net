@@ -7,7 +7,7 @@
 
 @using (@Html.BeginForm())
 {
-     <input type="text" name="x" placeholder="Username or email"><br>
+    <input type="text" name="x" placeholder="Username or email"><br>
     <div>
         <div class="boxed">
             This text is enclosed in a box.
@@ -15,7 +15,7 @@
             The items can then be selected to either erase them or ignore them.
             @foreach (string chat in tester.Models.Database.reviewsRequests)
             {
-            <b>@chat.ToString()</b>
+                <b>@chat.ToString()</b>
             }
 
         </div>
