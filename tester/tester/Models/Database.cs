@@ -366,7 +366,7 @@ namespace tester.Models
         
          // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
         // Get ID from selected chat/review/request to change visibility/reported
-        public static string ItemIDSelected;
+        public static int ItemIDSelected;
         public static bool getSelected(string column, string message, string IDFromWich, string nameOfMessage)
         {
             bool ok = false;
@@ -387,7 +387,7 @@ namespace tester.Models
                     while (_Reader.Read())
                     {
 
-                        ItemIDSelected = (Convert.ToString(_Reader["" + IDFromWich + ""]));
+                        ItemIDSelected = (Convert.ToInt32(_Reader["" + IDFromWich + ""]));
 
                     }
                 }
@@ -437,7 +437,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT * FROM REVIEW";
+                m_command.CommandText = "SELECT * FROM REVIEW WHERE ISVISIBLE = 'Y'";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
@@ -470,7 +470,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT * FROM CHAT";
+                m_command.CommandText = "SELECT * FROM CHAT WHERE ISVISIBLE = 'Y'";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
@@ -622,7 +622,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT * FROM HULPVRAAG";
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y'";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {

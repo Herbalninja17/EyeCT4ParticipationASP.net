@@ -13,8 +13,7 @@
             {
                   <ul>
                     <li><b>@chat.ToString()</b></li>
-                      <a href="@Url.Action("Reviews", "Admin", new { id = tester.Models.Database.ItemIDSelected })">Remove</a> 
-                      <a href="@Url.Action("Reviews", "Admin", new { id = tester.Models.Database.ItemIDSelected })">Ignore</a>
+                      <a href="@Url.Action("selectChat", "Admin", new { message = @chat.ToString() })">Select</a> 
                 </ul>
             }
 
@@ -26,7 +25,6 @@
             <input type="button" name="reportedReviewsBTN" value="Reported Reviews" onclick="location.href='@Url.Action("reportedReviews", "Admin")'"><br>
             <input type="button" name="reportedRequestsBTN" value="Reported Requests" onclick="location.href='@Url.Action("reportedRequest", "Admin")'"><br>
             <input type="button" name="reportedChatsBTN" value="Reported Chats" onclick="location.href='@Url.Action("reportedChats", "Admin")'"><br><br>   
-            <input type="text" name="username" placeholder="Content.."><br><br /> 
             <input type="submit" name="command" value="Remove selected"><br><br>
             <input type="submit" name="command" value="Ignore selected"><br><br>
             <input type="button" name="logOutBTN" value="Logout" onclick="location.href='@Url.Action("Index", "Login")'"><br>
