@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Chats";
 }
 
@@ -7,18 +6,17 @@
 
 @using (@Html.BeginForm())
 {
+    <input type="text" name="x" placeholder="Username or email"><br>
     <div>
         <div class="boxed">
             This text is enclosed in a box.
             When the admin presses a button the corresponding content will be showed here.
             The items can then be selected to either erase them or ignore them.
-            @*@foreach (string item in Database.reviewsListAdmin)
-                {
-                    <div>
-                        @item
-                        <hr />
-                    </div>
-                }*@
+            @foreach (string chat in tester.Models.Database.reviewsRequests)
+            {
+                <b>@chat.ToString()</b>
+            }
+
         </div>
         <div id="buttons">
             <input type="button" name="reviewsBTN" value="reviews" onclick="location.href='@Url.Action("Reviews", "Admin")'"><br>

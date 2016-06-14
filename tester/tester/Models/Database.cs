@@ -191,10 +191,12 @@ namespace tester.Models
             }
         }
 
-        static User user;
-        public static User Profile(int acid)
+        // Profile <OLAF>
+        public static User user;
+        public static User userBekijken;
+        public static void Profile(int acid, bool a)
         {
-            
+
             try
             {
                 OpenConnection();
@@ -214,7 +216,14 @@ namespace tester.Models
                             string woonplaats = Convert.ToString(_Reader["Woonplaats"]);
                             string adres = Convert.ToString(_Reader["Adres"]);
                             int telefoon = Convert.ToInt32(_Reader["Telefoonnummer"]);
-                            user = new User(naam, email, woonplaats, adres, telefoon);
+                            if (a == true)
+                            {
+                                user = new User(naam, email, woonplaats, adres, telefoon);
+                            }
+                            else if (a == false)
+                            {
+                                userBekijken = new User(naam, email, woonplaats, adres, telefoon);
+                            }
                         }
                     }
                     catch (OracleException ex)
@@ -229,9 +238,44 @@ namespace tester.Models
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
-            return user;
         }
 
+        //Review voor profile door <OLAF>
+        public static List<Review> reviewsProfile = new List<Review>();
+        public static void getMyReviews(int acid)
+        {
+            try
+            {
+                reviewsProfile.Clear();
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT r.reviewID, r.beoordeling, r.opmerkingen, r.needyID, n.gebruikersNaam AS needyNaam, r.volunteerID, v.gebruikersNaam AS volunteerNaam FROM Review r, Gebruiker n, Gebruiker v WHERE r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.needyID = :acid OR r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.volunteerID = :acid";
+                m_command.Parameters.Add("acid", OracleDbType.Int32).Value = acid;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    try
+                    {
+                        while (_Reader.Read())
+                        {
+                            Review review = new Review(Convert.ToInt32(_Reader["reviewID"]), Convert.ToString(_Reader["beoordeling"]), Convert.ToString(_Reader["opmerkingen"]), Convert.ToInt32(_Reader["needyID"]), Convert.ToString(_Reader["needyNaam"]), Convert.ToInt32(_Reader["volunteerID"]), Convert.ToString(_Reader["volunteerNaam"]));
+                            reviewsProfile.Add(review);
+                        }
+                    }
+                    catch (OracleException ex)
+                    {
+                        Database.CloseConnection();
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+        }
         public static List<Request> GetRequests(int ID)
         {
             List<Request> requests = new List<Request>();
@@ -268,7 +312,360 @@ namespace tester.Models
             }
             return requests;
         }
+
+        public static void placeARequest(int accountid, string omschrijving, string locatie, int reistijd,
+            string vervoerType, string startDatum, string eindDatum, string urgent, int aantalVrijwilligers)
+        {
+            int this_hulpvraagID = 0;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT COUNT(HulpvraagID) from Hulpvraag";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        this_hulpvraagID = Convert.ToInt32(_Reader["COUNT(HulpvraagID)"]) + 1;
+                    }
+                }
+
+                m_command.CommandText =
+                    "INSERT INTO Hulpvraag(HulpvraagID, Omschrijving, Locatie, Reistijd, VervoerType, Startdatum, Einddatum, Urgent, AantalVrijwilligers, GebruikerID) VALUES(:HulpvraagID, :Omschrijving, :Locatie, :Reistijd, :Vervoertype, :Startdatum, :Einddatum, :Urgent, :AantalVrijwilligers, :GebruikerID)";
+
+                Command.Parameters.Add("HulpvraagID", OracleDbType.Int32).Value = this_hulpvraagID;
+                Command.Parameters.Add("Omschrijving", OracleDbType.Varchar2).Value = omschrijving;
+                Command.Parameters.Add("Locatie", OracleDbType.Varchar2).Value = locatie;
+                Command.Parameters.Add("Reistijd", OracleDbType.Int32).Value = reistijd;
+                Command.Parameters.Add("Vervoertype", OracleDbType.Varchar2).Value = vervoerType;
+                Command.Parameters.Add("Startdatum", OracleDbType.Varchar2).Value = startDatum;
+                Command.Parameters.Add("Einddatum", OracleDbType.Varchar2).Value = eindDatum;
+                Command.Parameters.Add("Urgent", OracleDbType.Char).Value = urgent;
+                Command.Parameters.Add("AantalVrijwilligers", OracleDbType.Int32).Value = aantalVrijwilligers;
+                Command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountid;
+
+                Command.ExecuteNonQuery();
+            }
+            catch (OracleException ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        //=============================================================================================================
+
+
+        
+         // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
+        // Get ID from selected chat/review/request to change visibility/reported
+        public static string ItemIDSelected;
+        public static bool getSelected(string column, string message, string IDFromWich, string nameOfMessage)
+        {
+            bool ok = false;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT " + IDFromWich + " FROM " + column + " WHERE " + nameOfMessage + " = :GEKOZENBERICHT";
+                //Command.Parameters.Add("COLUMN", OracleDbType.Varchar2).Value = column;
+                Command.Parameters.Add("GEKOZENBERICHT", OracleDbType.Varchar2).Value = message;
+                //Command.Parameters.Add("ITEMID", OracleDbType.Varchar2).Value = IDFromWich;
+                //Command.Parameters.Add("BERICHT", OracleDbType.Varchar2).Value = nameOfMessage;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                ///ASIDHFHFOWJHOCWS
+                {
+                    while (_Reader.Read())
+                    {
+
+                        ItemIDSelected = (Convert.ToString(_Reader["" + IDFromWich + ""]));
+
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+
+        }
+
+
+        // Update table IsVisible/IsReported <Raphael>
+        public static bool alterYorN(string COLUMN, int ID, string IDFromWich, string visibleOrReported, string YorN)
+        {
+            bool ok = false;
+
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "UPDATE " + COLUMN + " SET " + visibleOrReported + " = '" + YorN + "' WHERE " + IDFromWich + "=" + ID;
+                //Command.Parameters.Add("Y", OracleDbType.Varchar2).Value = YorN;
+                //Command.Parameters.Add("IDFromWich", OracleDbType.Varchar2).Value = IDFromWich;
+                //Command.Parameters.Add("1", OracleDbType.Int32).Value = Convert.ToString(ID);
+                //Command.Parameters.Add("COLUMN", OracleDbType.Varchar2).Value = COLUMN;
+                m_command.ExecuteNonQuery();
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+        }
+
+
+
+
+        // GetReviews admin <Raphael>
+        public static List<string> reviewsListAdmin = new List<string>();
+        public static bool getReviewAdmin()
+        {
+            bool ok = false;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT * FROM REVIEW";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        //string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        //ac = acctype;
+                        //int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        //acID = accID;
+                        //result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        //if (result == username) { ok = true; }
+                        reviewsListAdmin.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
+
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+
+        }
+
+        // GetChat admin <Raphael>
+        public static List<string> chats = new List<string>();
+        public static bool getChat(long UserID1, long UserID2)
+        {
+            bool ok = false;
+
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT * FROM CHAT";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        //string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        //ac = acctype;
+                        //int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        //acID = accID;
+                        //result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        //if (result == username) { ok = true; }
+                        chats.Add(Convert.ToString(_Reader["BERICHT"]));
+
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+        }
+
+        // GetReported reviews admin <Raphael>
+        public static List<string> reportedReviews = new List<string>();
+        public static bool getReportedReviews(string query)
+        {
+            bool ok = false;
+
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = query;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        ////string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        ////ac = acctype;
+                        ////int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        ////acID = accID;
+                        ////result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        ////if (result == username) { ok = true; }
+                        //if (query == "SELECT OPMERKINGEN FROM REVIEW WHERE ISREPORTED = 'N'")
+                        //{
+                        //reported.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
+                        //}
+                        //if (query == "SELECT BERICHT FROM CHAT WHERE ISREPORTED = 'N'")
+                        //{
+                        //reported.Add(Convert.ToString(_Reader["BERICHT"]));
+                        //}
+                        //if (query == "SELECT OMSCHRIJVING FROM HULPVRAAG WHERE ISREPORTED = 'N'")
+                        //{
+                        reportedReviews.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
+                        //}
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+        }
+
+        // GetreportedChat admin <Raphael>
+        public static List<string> reportedChats = new List<string>();
+        public static bool getreportedChat()
+        {
+            bool ok = false;
+
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT BERICHT FROM CHAT WHERE ISREPORTED = 'Y'";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        //string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        //ac = acctype;
+                        //int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        //acID = accID;
+                        //result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        //if (result == username) { ok = true; }
+                        reportedChats.Add(Convert.ToString(_Reader["BERICHT"]));
+
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+        }
+
+        // GetReported requests admin <Raphael>
+        public static List<string> reportedRequests = new List<string>();
+        public static bool getReportedRequests(string query)
+        {
+            bool ok = false;
+
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = query;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        ////string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        ////ac = acctype;
+                        ////int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        ////acID = accID;
+                        ////result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        ////if (result == username) { ok = true; }
+                        //if (query == "SELECT OPMERKINGEN FROM REVIEW WHERE ISREPORTED = 'N'")
+                        //{
+                        //reported.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
+                        //}
+                        //if (query == "SELECT BERICHT FROM CHAT WHERE ISREPORTED = 'N'")
+                        //{
+                        //reported.Add(Convert.ToString(_Reader["BERICHT"]));
+                        //}
+                        //if (query == "SELECT OMSCHRIJVING FROM HULPVRAAG WHERE ISREPORTED = 'N'")
+                        //{
+                        reportedRequests.Add(Convert.ToString(_Reader["OMSCHRIJVING"]));
+                        //}
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+        }
+
+        // GetRequests admin <Raphael>
+        public static List<string> reviewsRequests = new List<string>();
+        public static bool getRequests()
+        {
+            bool ok = false;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT * FROM HULPVRAAG";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        //string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        //ac = acctype;
+                        //int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        //acID = accID;
+                        //result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        //if (result == username) { ok = true; }
+                        reviewsRequests.Add(Convert.ToString(_Reader["OMSCHRIJVING"]));
+
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+
+            return ok;
+
+        }
+
     }
 
 
 }
+
+    
+
