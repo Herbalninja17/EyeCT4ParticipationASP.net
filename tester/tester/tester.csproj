@@ -147,6 +147,7 @@
     <Content Include="Views\Admin\Reviews.cshtml" />
     <Content Include="Views\Admin\Requests.cshtml" />
     <Content Include="Views\Login\Profileb.cshtml" />
+    <Content Include="Views\Needy\Requests.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -157,7 +158,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\Needy\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
