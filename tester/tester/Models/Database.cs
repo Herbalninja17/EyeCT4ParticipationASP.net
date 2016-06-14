@@ -297,7 +297,16 @@ namespace tester.Models
                             string end = Convert.ToString(_Reader["EINDDATUM"]);
                             DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
                             DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
-                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
+                            bool a = false;
+                            if (Convert.ToString(_Reader["Urgent"]) == "Y")
+                            {
+                                a = true;
+                            }
+                            else if (Convert.ToString(_Reader["Urgent"]) == "N")
+                            {
+                                a = false;
+                            }
+                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), a, _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
                             requests.Add(request);
                         }
                     }
