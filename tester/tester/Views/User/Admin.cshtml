@@ -1,10 +1,31 @@
 ﻿@using tester.Models;
 
-
 @{
-    ViewBag.Title = "Admin";
- 
+    ViewBag.Title = "Reviews";
 }
 
-<h2>Admin</h2>
+<h2>Reviews</h2>
 
+@using (@Html.BeginForm())
+{
+    <div>
+        <div class="boxed">
+            @*foreach (string chat in tester.Models.Database.chathistory)
+            {
+            <li><b>@chat.ToString()</b></li>
+            }
+            <input type="submit">*@
+        </div>
+        <div id="buttons">
+            <input type="button" name="reviewsBTN" value="reviews" onclick="location.href='@Url.Action("Reviews", "Admin")'"><br>
+            <input type="button" name="requestsBTN" value="requests" onclick="location.href='@Url.Action("Requests", "Admin")'"><br>
+            <input type="button" name="chatsBTN" value="chats" onclick="location.href='@Url.Action("Chats", "Admin")'"><br>
+            <input type="button" name="reportedReviewsBTN" value="Reported Reviews"><br>
+            <input type="button" name="reportedRequestsBTN" value="Reported Reviews"><br>
+            <input type="button" name="reportedCommentsBTN" value="Reported Comments"><br><br>
+            <input type="button" name="reportBTN" value="Report selected"><br><br>
+            <input type="button" name="ignoreBTN" value="Ignore selected"><br><br>
+            <input type="button" name="logOutBTN" value="Logout"><br>
+        </div>
+    </div>
+}
