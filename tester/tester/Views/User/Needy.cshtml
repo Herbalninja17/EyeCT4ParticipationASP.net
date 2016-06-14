@@ -3,6 +3,10 @@
     ViewBag.Title = "Needy";
 }
 
-<h2>Needy</h2>
+<h2>Welkom - Hulpbehoevende</h2>
 
-<input type="button" name="Register" value="Register" onclick="location.href='@Url.Action("Requests", "Needy")'" />
+<div class="jumbotron">
+    <h1>Welkom hulpbehoevende</h1>
+    <p>U bent succesvol uitgelogd. Klik boven in de navigatiebar op een woord om naar die pagina te gaan, of klik op de knop om direct een hulpvraag uit te zetten.</p>
+    <p><a class="btn btn-primary btn-lg" onclick="window.location.href='@Url.Action("Requests", "Needy")'" role="button">Zet hulpvraag uit!</a></p>
+</div>
