@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Oracle.ManagedDataAccess.Client;
@@ -250,7 +249,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT r.reviewID, r.beoordeling, r.opmerkingen, r.needyID, n.gebruikersNaam AS needyNaam, r.volunteerID, v.gebruikersNaam AS volunteerNaam FROM Review r, Gebruiker n, Gebruiker v WHERE r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.needyID = :acid OR r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.volunteerID = :acid";
+                m_command.CommandText = "SELECT r.reviewID, r.beoordeling, r.opmerkingen, r.needyID, n.gebruikersNaam AS needyNaam, r.volunteerID, v.gebruikersNaam AS volunteerNaam FROM Review r, Gebruiker n, Gebruiker v WHERE r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.needyID = :acid OR r.IsVisible = 'Y' AND r.needyID = n.gebruikerID AND r.volunteerID = v.gebruikerID AND r.volunteerID = :acid"; 
                 m_command.Parameters.Add("acid", OracleDbType.Int32).Value = acid;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
