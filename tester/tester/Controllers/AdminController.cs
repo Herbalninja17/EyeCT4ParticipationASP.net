@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using tester.Models;
 
 namespace tester.Controllers
 {
     public class AdminController : Controller
     {
         //
-        // GET: /Admin/
+        // GET: Admin
         [HttpPost]
-        public ActionResult Chats(int x)
+        public ActionResult Chats(string x)
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Reviews(int x)
+        public ActionResult Reviews(string x)
         {
+            Database.getReviewAdmin();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Requests(int x)
+        public ActionResult Requests(string x)
         {
+            Database.getRequests();
             return View();
         }
 
