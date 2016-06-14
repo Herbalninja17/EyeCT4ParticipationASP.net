@@ -150,6 +150,7 @@
     <Content Include="Views\Admin\reportedReviews.cshtml" />
     <Content Include="Views\Admin\reportedChats.cshtml" />
     <Content Include="Views\Admin\reportedRequest.cshtml" />
+    <Content Include="Views\Needy\Requests.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -160,7 +161,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\Needy\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
