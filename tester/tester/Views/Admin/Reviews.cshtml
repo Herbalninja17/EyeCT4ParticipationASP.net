@@ -20,15 +20,15 @@
         </div>
 
         <div id="buttons">
-            <input type="submit" name="reviewsBTN" value="reviews" onclick="location.href='@Url.Action("Reviews", "Admin")'"><br>
+            <input type="button" name="reviewsBTN" value="reviews" onclick="location.href='@Url.Action("Reviews", "Admin")'"><br>
             <input type="button" name="requestsBTN" value="requests" onclick="location.href='@Url.Action("Requests", "Admin")'"><br>
             <input type="button" name="chatsBTN" value="chats" onclick="location.href='@Url.Action("Chats", "Admin")'"><br>
-            <input type="button" name="reportedReviewsBTN" value="Reported Reviews"><br>
-            <input type="button" name="reportedRequestsBTN" value="Reported Reviews"><br>
-            <input type="button" name="reportedCommentsBTN" value="Reported Comments"><br><br>
-            <input type="button" name="reportBTN" value="Report selected"><br><br>
-            <input type="button" name="ignoreBTN" value="Ignore selected"><br><br>
-            <input type="button" name="logOutBTN" value="Logout"><br>
+            <input type="button" name="reportedReviewsBTN" value="Reported Reviews" onclick="location.href='@Url.Action("reportedReviews", "Admin")'"><br>
+            <input type="button" name="reportedRequestsBTN" value="Reported Requests" onclick="location.href='@Url.Action("reportedRequest", "Admin")'"><br>
+            <input type="button" name="reportedChatsBTN" value="Reported Chats" onclick="location.href='@Url.Action("reportedChats", "Admin")'"><br><br>
+            <input type="submit" name="command" value="Remove selected"><br><br>
+            <input type="submit" name="command" value="Ignore selected"><br><br>
+            <input type="button" name="logOutBTN" value="Logout" onclick="location.href='@Url.Action("Index", "Login")'"><br>
         </div>
     </div>
 }
