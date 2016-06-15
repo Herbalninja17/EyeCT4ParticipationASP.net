@@ -1,0 +1,37 @@
+﻿@model tester.Models.Request
+  @{
+ ViewBag.Title = "VolunteerIntrested";
+}
+<h2>Volunteer</h2>
+@using (@Html.BeginForm())
+{
+    <div class="TitleVolunteer">
+        <h3>Requests:</h3>
+    </div>
+    <div class="boxed">
+        @foreach (var hulpvraag in tester.Models.Database.GetAllVisibleRequests()) // Kan een oplossing zijn
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@hulpvraag.description</h3>
+                </div>
+                <div class="panel-body">
+                    <b>Locatie: </b>@hulpvraag.location <br>
+                    <b>Vervoerstype gewenst: </b>@hulpvraag.transportType <br>
+                    <b>Aantal vrijwilligers gewenst: </b>@hulpvraag.totalVolunteer <br>
+                    <b>Begintijd: </b>@hulpvraag.startDate <br>
+                    <b>Eindtijd: </b>@hulpvraag.endDate <br>
+                    <b>Reistijd: </b>@hulpvraag.travelTime <b>minuten.</b> <br>
+                    <b>Is urgent: </b>@hulpvraag.urgency
+                </div>
+            </div>
+        }
+    </div>
+    <div id="buttons">
+        <input type="submit" name="interestedBTN" value="interested">
+        <input type="submit" name="Report" value="Report" />
+    </div>
+
+
+
+}

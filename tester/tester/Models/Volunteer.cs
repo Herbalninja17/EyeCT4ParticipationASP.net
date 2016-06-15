@@ -5,6 +5,7 @@ using System.Web;
 
 namespace tester.Models
 {
+
     public class Volunteer:User
     {
         public int volunteerID { get; set; }
