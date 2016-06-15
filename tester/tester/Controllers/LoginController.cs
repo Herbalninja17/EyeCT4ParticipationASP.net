@@ -98,12 +98,14 @@ namespace tester.Controllers
             }
         }
 
+        static int profileb;
         [HttpGet]
         public ActionResult Profileb(int acID)
         {
 
             Database.Profile(acID, false);
             User user = Database.userBekijken;
+            profileb = acID;
             ViewBag.naam = user.naam;
             ViewBag.email = user.email;
             ViewBag.woonplaats = user.woonplaats;
@@ -120,6 +122,22 @@ namespace tester.Controllers
             }
             var myreviews = Database.reviewsProfile.OrderByDescending(x => x.reviewID);
             return View(myreviews);
+        }
+        
+        [HttpGet]
+        public ActionResult ReportReview(int revID, bool profile)
+        {
+            if (profile == false)
+            {
+                Database.alterYorN("Review", revID, "REVIEWID", "ISREPORTED", "Y");
+                return RedirectToAction("Profile", "Login");
+            }
+            else
+            {
+                Database.alterYorN("Review", revID, "REVIEWID", "ISREPORTED", "Y");
+                return RedirectToAction("Profileb", "Login", new { acID = profileb});
+            }
+            
         }
     }
 }

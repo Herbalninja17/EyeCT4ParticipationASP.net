@@ -26,7 +26,8 @@
                         <li>
                             @item.opmerkingen<br>
                             Door @Html.ActionLink(item.needyName, "Profileb", "Login", new { acID = item.needyID}, null) over @Html.ActionLink(item.volunteerName, "Profileb", "Login", new { acID = item.volunteerID}, null)<br>
-                            Beoordeling: @item.beoordeling
+                            Beoordeling: @item.beoordeling<br>
+                            @Html.ActionLink("Report review", "ReportReview", "Login", new { revID = item.reviewID, profile = false }, null)
                         </li>
                     }
                 }
