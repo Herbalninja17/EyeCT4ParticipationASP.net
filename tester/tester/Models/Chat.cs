@@ -8,11 +8,6 @@ namespace tester.Models
 {
     public class Chat
     {
-        public static object refreshchat()
-        {
-            tester.Models.Database.chatbox(3, 2);
-            return "";
-        }
 
     }
 }

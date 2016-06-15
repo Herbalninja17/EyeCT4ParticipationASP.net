@@ -11,9 +11,9 @@ namespace tester.Controllers
     {
         // GET: Chat
         [HttpPost]
-        public ActionResult Chatbox(int n, int v, string msg, int i)
+        public ActionResult Chatbox(string msg, int i)
         {
-            tester.Models.Database.chatsend(n, v, msg, i);
+            tester.Models.Database.chatsend(3, 2, msg, i);
             return View();
         }
 
