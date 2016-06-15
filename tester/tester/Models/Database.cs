@@ -363,8 +363,8 @@ namespace tester.Models
         }
 
         //=============================================================================================================
-        
-         // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
+
+        // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
         // Get ID from selected chat/review/request to change visibility/reported
         public static int ItemIDSelected;
         public static bool getSelected(string column, string message, string IDFromWich, string nameOfMessage)
@@ -513,9 +513,9 @@ namespace tester.Models
                 {
                     while (_Reader.Read())
                     {
-                        
+
                         reportedReviews.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
-                       
+
                     }
                 }
             }
@@ -654,5 +654,5 @@ namespace tester.Models
 
 }
 
-    
+
 
