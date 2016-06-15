@@ -12,11 +12,11 @@ namespace tester.Controllers
 
         [HttpPost]
 
-        public ActionResult Requests()
-        {
-            List<Request> requests =Database.GetAllVisibleRequests();
-            return View(requests);
-        }
+        //public ActionResult Requests()
+        //{
+        //    //List<Request> requests = Database.GetAllVisibleRequests();
+        //    //return View(requests);
+        //}
 
         // GET: Volunteer
     [HttpGet]
