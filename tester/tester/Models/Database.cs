@@ -436,7 +436,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT * FROM REVIEW WHERE ISVISIBLE = 'Y'";
+                m_command.CommandText = "SELECT * FROM REVIEW";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
@@ -469,7 +469,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT * FROM CHAT WHERE ISVISIBLE = 'Y'";
+                m_command.CommandText = "SELECT * FROM CHAT";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
@@ -621,7 +621,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y'";
+                m_command.CommandText = "SELECT * FROM HULPVRAAG";
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
