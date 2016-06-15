@@ -39,8 +39,7 @@ namespace tester.Models
         public string reactionList { get; set; }
         public bool reported { get; set; }
 
-        public Request(int ID, int needyID, string description, bool urgency, string location, int traveltime, string transporttype,
-            DateTime startdate, DateTime enddate, int totalvolunteers)
+        public Request(int ID, int needyID, string description, bool urgency, string location, int traveltime, string transporttype, DateTime startdate, DateTime enddate, int totalvolunteers)
         {
             this.requestID = ID;
             this.needyID = needyID;

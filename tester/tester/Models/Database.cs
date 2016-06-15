@@ -627,12 +627,12 @@ namespace tester.Models
                 {
                     while (_Reader.Read())
                     {
-                        //string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
-                        //ac = acctype;
-                        //int accID = Convert.ToInt32(_Reader["GebruikerID"]);
-                        //acID = accID;
-                        //result = Convert.ToString(_Reader["Gebruikersnaam"]);
-                        //if (result == username) { ok = true; }
+                        // string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        // ac = acctype;
+                        // int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        // acID = accID;
+                        // result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        // if (result == username) { ok = true; }
                         reviewsRequests.Add(Convert.ToString(_Reader["OMSCHRIJVING"]));
 
                     }
