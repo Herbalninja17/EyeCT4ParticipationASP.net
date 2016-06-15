@@ -128,6 +128,7 @@
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <Content Include="Views\Admin\reportedChats.cshtml" />
     <Content Include="Views\Admin\reportedRequest.cshtml" />
     <Content Include="Views\Needy\Requests.cshtml" />
+    <Content Include="Views\Volunteer\VolunteerIntrested.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -164,7 +166,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\Volunteer\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
