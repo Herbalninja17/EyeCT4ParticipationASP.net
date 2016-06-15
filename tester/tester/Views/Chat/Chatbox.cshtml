@@ -1,15 +1,15 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Chatbox";
 }
 
 <h2>Chatbox</h2>
-
+@using tester.Models;
 
  @using (@Html.BeginForm())
  {
-          
-     
+    
+
+    
     <div class="chatpage">
         <div class="chatlist">
             <input type="text" name="n" placeholder="n" value="3"><br>
@@ -18,13 +18,22 @@
         </div>
 
         <div class="chatbox">
-            <div class="chat">
+            <div class="chat">  
+                              
+                @Chat.refreshchat()
                 @foreach (string chat in tester.Models.Database.chathistory)
-                    {
-                    <b>@chat.ToString()</b><br>
-                    }               
+                { 
+                    @chat.ToString() <br/> 
+                }
             </div>
-
+            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+            <script type="text/javascript" >
+                $(document).ready(function ()
+                    {setInterval(function ()
+                    {$('.chat')}, 1000)
+                    })
+            </script>
+            
             <div class="reply">
                 <div class="r1"><input class="textbox" type="text" name="msg" placeholder="Write a reply" size="100"></div>
                 <div class="r2"><input class="submitbtn" type="submit" name="send" value="Send"></div>
@@ -34,3 +43,4 @@
  }
 
 <br /><br />
+
