@@ -42,7 +42,7 @@ namespace tester.Models
         public static OracleCommand Command { get { return m_command; } }
 
         //Rechard
-        public static string acnaam = "";
+        public static string acnaam = string.Empty;
         public static string ac;
         public static int acid;
         public static bool Login(string username, string password)
