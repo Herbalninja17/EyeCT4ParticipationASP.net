@@ -13,6 +13,7 @@
             {
                 <ul>
                     <li><b>@request.ToString()</b></li>
+                    <a href="@Url.Action("selectRequest", "Admin", new { message = @request.ToString() })">Select</a> 
                 </ul>
             }
 
