@@ -46,6 +46,7 @@
     border: 1px solid black;
     width: 60vw;
     height: 30vh;
+    overflow: scroll;
 }
 
 
@@ -190,5 +191,3 @@ textarea {
     width: 80%;
     height: 100%;
 }
-
-

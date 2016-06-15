@@ -52,5 +52,9 @@ namespace tester.Models
             this.endDate = enddate;
             this.totalVolunteer = totalvolunteers;
         }
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

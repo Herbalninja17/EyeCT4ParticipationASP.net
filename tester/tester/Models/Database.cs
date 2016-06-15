@@ -153,8 +153,41 @@ namespace tester.Models
                 Console.WriteLine(ex.Message);
             }
             return bericht;
-
         }
+
+        //public static List<string> openchats = new List<string>();
+        //public static string chatlist(int id)
+        //{
+        //    chathistory.Clear();
+        //    string bericht = "";
+        //    string hetzender = "";
+        //    string chatstring = "";
+        //    try
+        //    {
+        //        OpenConnection();
+        //        m_command = new OracleCommand();
+        //        m_command.Connection = m_conn;
+        //        m_command.CommandText = "SELECT c.Bericht, c.Zender, g.Gebruikersnaam from Chat c LEFT JOIN Gebruiker g ON c.Zender = g.GebruikerID WHERE c.GebruikerID = :needy OR c.GebruikerID2 = :volunteer ORDER BY ChatID ";
+        //        m_command.Parameters.Add("needy", OracleDbType.Varchar2).Value = id;
+        //        m_command.Parameters.Add("volunteer", OracleDbType.Varchar2).Value = id;
+        //        m_command.ExecuteNonQuery();
+        //        using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+        //        {
+        //            while (_Reader.Read())
+        //            {
+        //                hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
+        //                bericht = Convert.ToString(_Reader["Bericht"]);
+        //                chatstring = hetzender + ": " + bericht;
+        //                chathistory.Add(chatstring);
+        //            }
+        //        }
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return bericht;
+        //}
 
         // CHAT INSERTS <RECHARD>
         public static void chatsend(int needy, int volunteer, string bericht, int zender)
@@ -646,6 +679,56 @@ namespace tester.Models
 
             return ok;
 
+        }
+        //Melvin get All requests die visible zijn
+        public static List<Request> GetAllVisibleRequests()
+        {
+            List<Request> requests = new List<Request>();
+
+            try
+            {
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y' ORDER BY HULPVRAAGID";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    if (_Reader.HasRows)
+                    {
+                        while (_Reader.Read())
+                        {
+                            bool a = false;
+                            if (Convert.ToString(_Reader["Urgent"]) == "Y")
+                            {
+                                a = true;
+                            }
+                            else if (Convert.ToString(_Reader["Urgent"]) == "N")
+                            {
+                                a = false;
+                            }
+                            CultureInfo provider = CultureInfo.InvariantCulture;
+                            string start = Convert.ToString(_Reader["STARTDATUM"]);
+                            string end = Convert.ToString(_Reader["EINDDATUM"]);
+                            DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
+                            DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
+                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), a, _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
+                           
+                            if (requests.Contains(request) != true)
+                            {
+                                requests.Add(request);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return requests;
         }
 
     }

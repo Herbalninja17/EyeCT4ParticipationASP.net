@@ -2,21 +2,19 @@
 @{
     ViewBag.Title = "Volunteer";
 }
-@*@Html.checkbox*@
+
 <h2>Volunteer</h2>
 @using (@Html.BeginForm())
 {
     <div class="TitleVolunteer">
         <h3>Requests:</h3>
     </div>
-    <div class="Requests">
-        <textarea rows="10" cols="50" name="Requests" placeholder="geen requests beschikbaar"></textarea>
-
+    <div class="boxed">
     </div>
-    <div class="VolunteerButtons">
-        <input type="submit" name="interestedBTN" value="interested">
-        <input type="submit" name="Report" value="Report" />
-    </div>
+        <div id="buttons">
+            <input type="submit" name="interestedBTN" value="interested" onclick="location.href='@Url.Action("VolunteerIntrested", "Volunteer")'">
+            <input type="submit" name="Report" value="Report" />
+        </div>
 
 
 
