@@ -15,7 +15,7 @@ namespace tester.Controllers
         public ActionResult Requests()
         {
             //List<Request> requests =Database.GetAllVisibleRequests();
-            return View(/*requests*/);
+            return View();
         }
 
         // GET: Volunteer

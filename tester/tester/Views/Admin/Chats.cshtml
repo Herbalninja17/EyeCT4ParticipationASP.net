@@ -8,12 +8,12 @@
 {
     
     <div>
-        <div class="boxed">
-            @foreach (string chat in tester.Models.Database.chats) // Kan een oplossing zijn
+        <div class="boxed">  
+            @foreach (string chat in tester.Models.Database.chats)
             {
                   <ul>
                     <li><b>@chat.ToString()</b></li>
-                      <a href="@Url.Action("selectChat", "Admin", new { message = @chat.ToString() })">Select</a> 
+                    <a href="@Url.Action("selectChat", "Admin", new { message = @chat.ToString() })">Select</a> 
                 </ul>
             }
 
@@ -30,7 +30,7 @@
             <input type="button" name="logOutBTN" value="Logout" onclick="location.href='@Url.Action("Index", "Login")'"><br>
 
             <br /> <br />
-            <p>Naam van de gekoze message</p>
+            <p></p>
         </div>
     </div>
 }

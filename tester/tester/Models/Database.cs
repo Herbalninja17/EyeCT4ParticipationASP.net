@@ -365,7 +365,7 @@ namespace tester.Models
         //=============================================================================================================
 
         // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
-        // Get ID from selected chat/review/request to change visibility/reported
+        // Get ID from selected chat/review/request to change visibility/reported// Raphael
         public static int ItemIDSelected;
         public static bool getSelected(string column, string message, string IDFromWich, string nameOfMessage)
         {
@@ -382,7 +382,6 @@ namespace tester.Models
                 //Command.Parameters.Add("BERICHT", OracleDbType.Varchar2).Value = nameOfMessage;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
-                ///ASIDHFHFOWJHOCWS
                 {
                     while (_Reader.Read())
                     {
