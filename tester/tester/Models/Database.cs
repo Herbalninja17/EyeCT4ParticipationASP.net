@@ -643,14 +643,9 @@ namespace tester.Models
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
-
             return ok;
-
         }
-
     }
-
-
 }
 
 
