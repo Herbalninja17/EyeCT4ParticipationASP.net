@@ -4,7 +4,7 @@
     ViewBag.Title = "Requests";
 }
 
-<h2>Requests</h2>
+<h2>Hulpvragen</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -106,6 +106,7 @@
                 <b>Aantal vrijwilligers gewenst: </b>@hulpvraag.totalVolunteer <br>
                 <b>Begintijd: </b>@hulpvraag.startDate <br>
                 <b>Eindtijd: </b>@hulpvraag.endDate <br>
+                <b>Reistijd: </b>@hulpvraag.travelTime <b>minuten.</b> <br>
                 <b>Is urgent: </b>@hulpvraag.urgency
             </div>
         </div>

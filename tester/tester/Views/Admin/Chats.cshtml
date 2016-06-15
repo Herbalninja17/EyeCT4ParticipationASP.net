@@ -9,10 +9,11 @@
     
     <div>
         <div class="boxed">
-            @foreach (string chat in tester.Models.Database.chats)
+            @foreach (string chat in tester.Models.Database.chats) // Kan een oplossing zijn
             {
                   <ul>
                     <li><b>@chat.ToString()</b></li>
+                      <a href="@Url.Action("selectChat", "Admin", new { message = @chat.ToString() })">Select</a> 
                 </ul>
             }
 
@@ -23,10 +24,13 @@
             <input type="button" name="chatsBTN" value="chats" onclick="location.href='@Url.Action("Chats", "Admin")'"><br>
             <input type="button" name="reportedReviewsBTN" value="Reported Reviews" onclick="location.href='@Url.Action("reportedReviews", "Admin")'"><br>
             <input type="button" name="reportedRequestsBTN" value="Reported Requests" onclick="location.href='@Url.Action("reportedRequest", "Admin")'"><br>
-            <input type="button" name="reportedChatsBTN" value="Reported Chats" onclick="location.href='@Url.Action("reportedChats", "Admin")'"><br><br>    
+            <input type="button" name="reportedChatsBTN" value="Reported Chats" onclick="location.href='@Url.Action("reportedChats", "Admin")'"><br><br>   
             <input type="submit" name="command" value="Remove selected"><br><br>
             <input type="submit" name="command" value="Ignore selected"><br><br>
             <input type="button" name="logOutBTN" value="Logout" onclick="location.href='@Url.Action("Index", "Login")'"><br>
+
+            <br /> <br />
+            <p>Naam van de gekoze message</p>
         </div>
     </div>
 }

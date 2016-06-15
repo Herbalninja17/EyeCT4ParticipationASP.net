@@ -9,98 +9,100 @@ namespace tester.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
-        //Het wijzigen van de zichtbaarheid van de content. De admin kan content zelf reporten en verwijderen
-        // Chats
+        //-- Het wijzigen van de zichtbaarheid van de content. De admin kan content zelf reporten en verwijderen --- //
+        // Alter Chats
         [HttpPost]
         public ActionResult Chats(string command)
         {
             if (command.Equals("Remove selected"))
             {          
-                Database.alterYorN("CHAT", 2, "CHATID", "ISVISIBLE", "N");
+                Database.alterYorN("CHAT", Database.ItemIDSelected, "CHATID", "ISVISIBLE", "N");
             }
             else if (command.Equals("Ignore selected"))
             {
-                Database.alterYorN("CHAT", 2, "CHATID", "ISREPORTED", "N");
+                Database.alterYorN("CHAT", Database.ItemIDSelected, "CHATID", "ISREPORTED", "N");
             }
                 return View();
         }
 
-        // Reviews
+        // Alter Reviews
         [HttpPost]
         public ActionResult Reviews(string command)
         {
             if (command.Equals("Remove selected"))
             {
-                Database.alterYorN("REVIEW", 2, "REVIEWID", "ISVISIBLE", "N");
+                Database.alterYorN("REVIEW", Database.ItemIDSelected, "REVIEWID", "ISVISIBLE", "N");
             }
             else if (command.Equals("Ignore selected"))
             {
-                Database.alterYorN("REVIEW", 2, "REVIEWID", "ISREPORTED", "N");
+                Database.alterYorN("REVIEW", Database.ItemIDSelected, "REVIEWID", "ISREPORTED", "N");
             }
             return View();
         }
 
-        // Requests
+        // Alter Requests
         [HttpPost]
         public ActionResult Requests(string command)
         {
             if (command.Equals("Remove selected"))
             {
-                Database.alterYorN("HULPVRAAG", 2, "HULPVRAAGID", "ISVISIBLE", "N");
+                Database.alterYorN("HULPVRAAG", Database.ItemIDSelected, "HULPVRAAGID", "ISVISIBLE", "N");
             }
             else if (command.Equals("Ignore selected"))
             {
-                Database.alterYorN("HULPVRAAG", 2, "HULPVRAAGID", "ISREPORTED", "N");
+                Database.alterYorN("HULPVRAAG", Database.ItemIDSelected, "HULPVRAAGID", "ISREPORTED", "N");
             }
             return View();
         }
 
-        // reported Chats
+        // Alter reported Chats
         [HttpPost]
         public ActionResult reportedChats(string command)
         {
             if (command.Equals("Remove selected"))
             {
-                Database.alterYorN("CHAT", 2, "CHATID", "ISVISIBLE", "N");
+                Database.alterYorN("CHAT", Database.ItemIDSelected, "CHATID", "ISVISIBLE", "N");
             }
             else if (command.Equals("Ignore selected"))
             {
-                Database.alterYorN("CHAT", 2, "CHATID", "ISREPORTED", "N");
+                Database.alterYorN("CHAT", Convert.ToInt32(Database.ItemIDSelected), "CHATID", "ISREPORTED", "N");
             }
             return View();
         }
 
-        // reported Reviews
+        // Alter reported Reviews
         [HttpPost]
         public ActionResult reportedReviews(string command)
         {
             if (command.Equals("Remove selected"))
             {
-                Database.alterYorN("REVIEW", 2, "REVIEWID", "ISVISIBLE", "N");
+                Database.alterYorN("REVIEW", Database.ItemIDSelected, "REVIEWID", "ISVISIBLE", "N");
             }
             else if (command.Equals("Ignore selected"))
             {
-                Database.alterYorN("REVIEW", 2, "REVIEWID", "ISREPORTED", "N");
+                Database.alterYorN("REVIEW", Database.ItemIDSelected, "REVIEWID", "ISREPORTED", "N");
             }
             return View();
         }
 
-        // Reported Requests
+        // Alter Reported Requests
         [HttpPost]
         public ActionResult reportedRequests(string command)
         {
             if (command.Equals("Remove selected"))
             {
-                Database.alterYorN("HULPVRAAG", 2, "HULPVRAAGID", "ISVISIBLE", "N");
+                Database.alterYorN("HULPVRAAG", Database.ItemIDSelected, "HULPVRAAGID", "ISVISIBLE", "N");
             }
             else if (command.Equals("Ignore selected"))
             {
-                Database.alterYorN("HULPVRAAG", 2, "HULPVRAAGID", "ISREPORTED", "N");
+                Database.alterYorN("HULPVRAAG", Database.ItemIDSelected, "HULPVRAAGID", "ISREPORTED", "N");
             }
             return View();
         }
 
+        // ---Get relevant content--- //
+
+        // Get Chats
         [HttpGet]
         public ActionResult Chats()
         {
@@ -108,6 +110,7 @@ namespace tester.Controllers
             return View();
         }
 
+        // Get Reviews
         [HttpGet]
         public ActionResult Reviews()
         {
@@ -115,6 +118,7 @@ namespace tester.Controllers
             return View();
         }
 
+        // Get Requests
         [HttpGet]
         public ActionResult Requests()
         {
@@ -122,6 +126,7 @@ namespace tester.Controllers
             return View();
         }
 
+        // Get Reported Chats
         [HttpGet]
         public ActionResult reportedChats()
         {
@@ -129,6 +134,7 @@ namespace tester.Controllers
             return View();
         }
 
+        // Get Reported Reviews
         [HttpGet]
         public ActionResult reportedReviews()
         {
@@ -136,6 +142,7 @@ namespace tester.Controllers
             return View();
         }
 
+        // Get Reported Request
        [HttpGet]
         public ActionResult reportedRequest()
         {
@@ -143,5 +150,27 @@ namespace tester.Controllers
             return View();
         }
 
+        // --- Select ContentID to alter visibility/reported status --- //
+
+        // Select Chat
+        public ActionResult selectChat(string message)
+       {
+           Database.getSelected("CHAT", message, "CHATID", "BERICHT");
+           return RedirectToAction("Chats", "Admin");
+       }
+
+        // Select Review
+        public ActionResult selectReview(string message)
+        {
+            Database.getSelected("REVIEW", message, "REVIEWID", "OPMERKINGEN");
+            return RedirectToAction("Reviews", "Admin");
+        }
+        
+        // Select Request
+        public ActionResult selectRequest(string message)
+        {
+            Database.getSelected("HULPVRAAG", message, "HULPVRAAGID", "OMSCHRIJVING");
+            return RedirectToAction("Requests", "Admin");
+        }
     }
 }

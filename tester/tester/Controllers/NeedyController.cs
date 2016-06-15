@@ -21,9 +21,17 @@ namespace tester.Controllers
         }
 
         [HttpPost]
-        public ActionResult Requests(string description, string location, int totalVolunteer, string transportType, int travelTime, string startDate, string endDate, string urgent)
+        public ActionResult Requests(string description, string location, int totalVolunteer, string transportType, int travelTime, string startDate, string endDate, string urgency)
         {
-            Models.Database.placeARequest(tester.Models.Database.acid, description, location, travelTime, transportType, startDate, endDate, "Y", totalVolunteer);
+            if (urgency == "true")
+            {
+                urgency = "Y";
+            }
+            else if (urgency == "false")
+            {
+                urgency = "N";
+            }
+            Models.Database.placeARequest(tester.Models.Database.acid, description, location, travelTime, transportType, startDate, endDate, urgency, totalVolunteer);
             return View();
         }
 
