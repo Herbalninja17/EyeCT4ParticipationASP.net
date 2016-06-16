@@ -756,5 +756,37 @@
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public static List<Volunteer> GetVolunteers(int HulpvraagID)
+        {
+            List<Volunteer> volunteers = new List<Volunteer>();
+
+            try
+            {
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "SELECT G.GEBRUIKERSNAAM, G.EMAIL, G.ADRES, G.WOONPLAATS, G.TELEFOONNUMMER , G.GEBRUIKERID FROM GEBRUIKER G, INTRESSE I, HULPVRAAG H WHERE H.HULPVRAAGID = :HULPVRAAGID AND H.HULPVRAAGID = I.HULPVRAAGID AND I.GEBRUIKERID = G.GEBRUIKERID";
+                m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = HulpvraagID;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Command.ExecuteReader())
+                {
+                    if (_Reader.HasRows)
+                    {
+                        while (_Reader.Read())
+                        {
+                            Volunteer volunteer = new Volunteer(_Reader["GEBRUIKERSNAAM"].ToString(), _Reader["EMAIL"].ToString(), _Reader["ADRES"].ToString(), _Reader["WOONPLAATS"].ToString(), Convert.ToInt32(_Reader["TELEFOONNUMMER"]), Convert.ToInt32(_Reader["GEBRUIKERID"]));
+                            volunteers.Add(volunteer);
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return volunteers;
+        }
     }
 }
