@@ -7,16 +7,16 @@
  @using (@Html.BeginForm())
  {
     <div class="chatpage">
-        <div class="chatlist">
-            <input type="text" name="i" placeholder="i" value="2"><br>
-        </div>
 
         <div class="chatbox">
             <div class="chat"> 
-                    @foreach (string chat in tester.Models.Database.chathistory)
+                @if (tester.Models.Database.chathistory.Count() > 0)
+                {
+                    foreach (string chat in tester.Models.Database.chathistory)
                     {
                         @chat.ToString() <br/>
-                    }                   
+                    }
+                }
             </div>         
         
             <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
