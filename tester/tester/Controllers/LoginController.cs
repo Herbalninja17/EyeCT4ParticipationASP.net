@@ -31,7 +31,7 @@
                 }
                 else if (Database.ac == "Volunteer")
                 {
-                    return this.RedirectToAction("Volunteer", "User");
+                    return this.RedirectToAction("VolunteerIntrested", "Volunteer");
                 }
             }
             else if (Database.Login(username, password) == false)
