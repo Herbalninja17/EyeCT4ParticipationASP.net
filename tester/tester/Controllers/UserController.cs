@@ -17,7 +17,7 @@
         public ActionResult Volunteer()
         {
 
-            return this.View("VolunteerIntrested");
+            return this.View();
         }
 
         public ActionResult Admin()

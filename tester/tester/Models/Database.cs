@@ -84,6 +84,7 @@
                         acnaam = result;
                         acid = Convert.ToInt32(_Reader["GebruikerID"]);
                         if (result == username) { ok = true; }
+                        Online online = new Online();
                     }
                 }
             }
