@@ -109,6 +109,17 @@
                 <b>Reistijd: </b>@hulpvraag.travelTime <b>minuten.</b> <br>
                 <b>Is urgent: </b>@hulpvraag.urgency
             </div>
+
+            @if (tester.Models.Database.GetVolunteers(hulpvraag.requestID).Count > 0)
+            {
+                <div class="panel-body">
+                    <h5><b>Geïnteresseerde vrijwilliger(s):</b></h5>
+                    @foreach (var volunteers in tester.Models.Database.GetVolunteers(hulpvraag.requestID))
+                    {
+                        @volunteers.naam <br>
+                    }
+                </div>
+            }
         </div>
     }
 </div>

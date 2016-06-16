@@ -1,6 +1,7 @@
-﻿@model tester.Models.Request
-  @{
- ViewBag.Title = "VolunteerIntrested";
+﻿@model IEnumerable<tester.Models.Request>
+
+@{
+    ViewBag.Title = "VolunteerIntrested";
 }
 <h2>Volunteer</h2>
 @using (@Html.BeginForm())
@@ -9,11 +10,12 @@
         <h3>Requests:</h3>
     </div>
     <div class="boxed">
-        @foreach (var hulpvraag in tester.Models.Database.GetAllVisibleRequests()) // Kan een oplossing zijn
+        @foreach (var hulpvraag in Model) 
         {
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">@hulpvraag.description</h3>
+                    <a href="@Url.Action("selectRequest", "Volunteer", new { RequestID = hulpvraag.requestID })">Select</a> 
                 </div>
                 <div class="panel-body">
                     <b>Locatie: </b>@hulpvraag.location <br>
@@ -31,7 +33,4 @@
         <input type="submit" name="interestedBTN" value="interested">
         <input type="submit" name="Report" value="Report" />
     </div>
-
-
-
 }

@@ -1,17 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
-
-namespace tester.Models
+﻿namespace tester.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.ComponentModel.DataAnnotations;
+
     public class Request
     {
+        public Request(int ID, int needyID, string description, bool urgency, string location, int traveltime, string transporttype,
+            DateTime startdate, DateTime enddate, int totalvolunteers)
+        {
+            this.requestID = ID;
+            this.needyID = needyID;
+            this.description = description;
+            this.urgency = urgency;
+            this.location = location;
+            this.travelTime = traveltime;
+            this.transportType = transporttype;
+            this.startDate = startdate;
+            this.endDate = enddate;
+            this.totalVolunteer = totalvolunteers;
+        }
+
         public int requestID { get; set; }
         public int needyID { get; set; }
 
-        [Required (ErrorMessage = "Voer een omschrijving van Uw hulpvraag in.")]
+        [Required(ErrorMessage = "Voer een omschrijving van Uw hulpvraag in.")]
         [DataType(DataType.MultilineText)]
         public string description { get; set; }
 
@@ -39,19 +54,6 @@ namespace tester.Models
         public string reactionList { get; set; }
         public bool reported { get; set; }
 
-        public Request(int ID, int needyID, string description, bool urgency, string location, int traveltime, string transporttype, DateTime startdate, DateTime enddate, int totalvolunteers)
-        {
-            this.requestID = ID;
-            this.needyID = needyID;
-            this.description = description;
-            this.urgency = urgency;
-            this.location = location;
-            this.travelTime = traveltime;
-            this.transportType = transporttype;
-            this.startDate = startdate;
-            this.endDate = enddate;
-            this.totalVolunteer = totalvolunteers;
-        }
         public override string ToString()
         {
             return base.ToString();
