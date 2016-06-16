@@ -110,5 +110,10 @@
                 <b>Is urgent: </b>@hulpvraag.urgency
             </div>
         </div>
+
+        foreach (var volunteers in tester.Models.Database.GetVolunteers(hulpvraag.requestID))
+        {
+            @volunteers.naam <br>
+        }
     }
 </div>
