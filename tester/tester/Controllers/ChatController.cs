@@ -9,18 +9,38 @@
 
     public class ChatController : Controller
     {
+        static int needy;
+        static int volunteer;
+        static int zender;
+
         //GET: Chat
-       [HttpPost]
-        public ActionResult Chatbox(string msg, int i)
+        [HttpPost]
+        public ActionResult Chatbox(string msg)
         {
-            Database.chatsend(3, 2, msg, i);
+            Database.chatsend(needy, volunteer, msg, zender);
+            Database.chatbox(needy, volunteer);
             return this.View();
         }
 
         [HttpGet]
-        public ActionResult Chatbox()
+        public ActionResult Chatbox(int id)
         {
-            Database.chatbox(3, 2);
+            if (Database.ac == "Volunteer")
+            {
+                Database.chatbox(id, Database.acid);
+                volunteer = Database.acid;
+                needy = id;
+                zender = volunteer;
+                return this.View();
+            }
+            else if (Database.ac == "Needy")
+            {
+                needy = Database.acid;
+                volunteer = id;
+                zender = needy;
+                Database.chatbox(Database.acid, id);
+                return this.View();
+            }
             return this.View();
         }
     }

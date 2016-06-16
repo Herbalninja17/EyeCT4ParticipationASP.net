@@ -687,6 +687,7 @@
             return ok;
 
         }
+
         //Melvin get All requests die visible zijn
         public static List<Request> GetAllVisibleRequests(int userID)
         {
@@ -738,6 +739,7 @@
             }
             return requests;
         }
+
         //melvin Add 1 user in tabel intresse toevoegen 
         public static void intresse(int RequestID, int accountID)
         {

@@ -33,6 +33,10 @@
                 {
                     return this.RedirectToAction("Volunteer", "User");
                 }
+                else if (Database.ac == "Admin")
+                {
+                    return this.RedirectToAction("Chats", "Admin");
+                }
             }
             else if (Database.Login(username, password) == false)
             {
