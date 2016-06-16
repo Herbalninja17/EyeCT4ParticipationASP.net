@@ -1,75 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using tester.Models;
-
-namespace tester.Controllers
+﻿namespace tester.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using tester.Models;
+
     public class LoginController : Controller
     {
-        string naam;
+        private static int profileb;
+
         // GET: Login
         //httpPost werk als iemand iets submit
         [HttpPost]
         public ActionResult Index(string username, string password)
         {
-            ViewBag.loginfail = "";
+            ViewBag.loginfail = string.Empty;
             ViewBag.user = username;
             if ("Rechard".Equals(username) == true)
             {
-                return RedirectToAction("Register", "Login");
+                return this.RedirectToAction("Register", "Login");
             }
             Models.Database.Login(username, password);
-            if (Models.Database.Login(username, password) == true)
+            if (Database.Login(username, password) == true)
             {
-                if (Models.Database.ac == "Needy")
+                if (Database.ac == "Needy")
                 {
-                    return RedirectToAction("Needy", "User");
+                    return this.RedirectToAction("Needy", "User");
                 }
-                else if (Models.Database.ac == "Volunteer")
+                else if (Database.ac == "Volunteer")
                 {
-                    return RedirectToAction("Volunteer", "User");
+                    return this.RedirectToAction("Volunteer", "User");
                 }
             }
-            else if (Models.Database.Login(username, password) == false)
+            else if (Database.Login(username, password) == false)
             {
                 ViewBag.loginfail = "*Incorrect credentials*";
             }
-
-
-            return View();
+            return this.View();
         }
 
         //httpGet werkt als iemand het pagine view, refresh enzo
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         [HttpPost]
         public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone)
         {
-            Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", "", "N", "N");
-            return View();
+            Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N");
+            return this.View();
         }
 
         [HttpGet]
         public ActionResult Register()
         {
-            return View();
+            return this.View();
         }
 
         [HttpGet]
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public ActionResult Profile()
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         {
-            ViewBag.naam = "";
-            ViewBag.email = "";
-            ViewBag.woonplaats = "";
-            ViewBag.adres = "";
-            ViewBag.telefoon = "";
+            ViewBag.naam = string.Empty;
+            ViewBag.email = string.Empty;
+            ViewBag.woonplaats = string.Empty;
+            ViewBag.adres = string.Empty;
+            ViewBag.telefoon = string.Empty;
 
             if (Database.acid != 0)
             {
@@ -90,19 +91,17 @@ namespace tester.Controllers
                     ViewBag.reviews = "Y";
                 }
                 var myreviews = Database.reviewsProfile.OrderByDescending(x => x.reviewID);
-                return View(myreviews);
+                return this.View(myreviews);
             }
             else
             {
-                return View();
+                return this.View();
             }
         }
 
-        static int profileb;
         [HttpGet]
         public ActionResult Profileb(int acID)
         {
-
             Database.Profile(acID, false);
             User user = Database.userBekijken;
             profileb = acID;
@@ -121,23 +120,23 @@ namespace tester.Controllers
                 ViewBag.reviews = "Y";
             }
             var myreviews = Database.reviewsProfile.OrderByDescending(x => x.reviewID);
-            return View(myreviews);
+            return this.View(myreviews);
         }
-        
+
         [HttpGet]
         public ActionResult ReportReview(int revID, bool profile)
         {
             if (profile == false)
             {
                 Database.alterYorN("Review", revID, "REVIEWID", "ISREPORTED", "Y");
-                return RedirectToAction("Profile", "Login");
+                return this.RedirectToAction("Profile", "Login");
             }
             else
             {
                 Database.alterYorN("Review", revID, "REVIEWID", "ISREPORTED", "Y");
-                return RedirectToAction("Profileb", "Login", new { acID = profileb});
+                return this.RedirectToAction("Profileb", "Login", new { acID = profileb });
             }
-            
+
         }
     }
 }

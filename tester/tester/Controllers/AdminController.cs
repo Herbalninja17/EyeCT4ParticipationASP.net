@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using tester.Models;
-
-namespace tester.Controllers
+﻿namespace tester.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using tester.Models;
+
     public class AdminController : Controller
     {
         //-- Het wijzigen van de zichtbaarheid van de content. De admin kan content zelf reporten en verwijderen --- //
@@ -22,7 +22,7 @@ namespace tester.Controllers
             {
                 Database.alterYorN("CHAT", Database.ItemIDSelected, "CHATID", "ISREPORTED", "N");
             }
-                return View();
+                return this.View();
         }
 
         // Alter Reviews
@@ -37,7 +37,7 @@ namespace tester.Controllers
             {
                 Database.alterYorN("REVIEW", Database.ItemIDSelected, "REVIEWID", "ISREPORTED", "N");
             }
-            return View();
+            return this.View();
         }
 
         // Alter Requests
@@ -52,7 +52,7 @@ namespace tester.Controllers
             {
                 Database.alterYorN("HULPVRAAG", Database.ItemIDSelected, "HULPVRAAGID", "ISREPORTED", "N");
             }
-            return View();
+            return this.View();
         }
 
         // Alter reported Chats
@@ -67,7 +67,7 @@ namespace tester.Controllers
             {
                 Database.alterYorN("CHAT", Convert.ToInt32(Database.ItemIDSelected), "CHATID", "ISREPORTED", "N");
             }
-            return View();
+            return this.View();
         }
 
         // Alter reported Reviews
@@ -82,7 +82,7 @@ namespace tester.Controllers
             {
                 Database.alterYorN("REVIEW", Database.ItemIDSelected, "REVIEWID", "ISREPORTED", "N");
             }
-            return View();
+            return this.View();
         }
 
         // Alter Reported Requests
@@ -97,7 +97,7 @@ namespace tester.Controllers
             {
                 Database.alterYorN("HULPVRAAG", Database.ItemIDSelected, "HULPVRAAGID", "ISREPORTED", "N");
             }
-            return View();
+            return this.View();
         }
 
         // ---Get relevant content--- //
@@ -107,7 +107,7 @@ namespace tester.Controllers
         public ActionResult Chats()
         {
             Database.getChat();
-            return View();
+            return this.View();
         }
 
         // Get Reviews
@@ -115,7 +115,7 @@ namespace tester.Controllers
         public ActionResult Reviews()
         {
             Database.getReviewAdmin();
-            return View();
+            return this.View();
         }
 
         // Get Requests
@@ -123,7 +123,7 @@ namespace tester.Controllers
         public ActionResult Requests()
         {
             Database.getRequests();
-            return View();
+            return this.View();
         }
 
         // Get Reported Chats
@@ -131,7 +131,7 @@ namespace tester.Controllers
         public ActionResult reportedChats()
         {
             Database.getreportedChat();
-            return View();
+            return this.View();
         }
 
         // Get Reported Reviews
@@ -139,7 +139,7 @@ namespace tester.Controllers
         public ActionResult reportedReviews()
         {
             Database.getReportedReviews();
-            return View();
+            return this.View();
         }
 
         // Get Reported Request
@@ -147,7 +147,7 @@ namespace tester.Controllers
         public ActionResult reportedRequest()
         {
             Database.getReportedRequests();
-            return View();
+            return this.View();
         }
 
         // --- Select ContentID to alter visibility/reported status --- //
@@ -156,21 +156,21 @@ namespace tester.Controllers
         public ActionResult selectChat(string message)
        {
            Database.getSelected("CHAT", message, "CHATID", "BERICHT");
-           return RedirectToAction("Chats", "Admin");
+           return this.RedirectToAction("Chats", "Admin");
        }
 
         // Select Review
         public ActionResult selectReview(string message)
         {
             Database.getSelected("REVIEW", message, "REVIEWID", "OPMERKINGEN");
-            return RedirectToAction("Reviews", "Admin");
+            return this.RedirectToAction("Reviews", "Admin");
         }
         
         // Select Request
         public ActionResult selectRequest(string message)
         {
             Database.getSelected("HULPVRAAG", message, "HULPVRAAGID", "OMSCHRIJVING");
-            return RedirectToAction("Requests", "Admin");
+            return this.RedirectToAction("Requests", "Admin");
         }
     }
 }

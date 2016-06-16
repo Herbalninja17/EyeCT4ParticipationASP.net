@@ -1,17 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using Oracle.ManagedDataAccess.Client;
-
-namespace tester.Models
+﻿namespace tester.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Web;
+    using Oracle.ManagedDataAccess.Client;
+
     public class Database
     {
-        static OracleConnection m_conn;
-        static OracleCommand m_command;
-        static string connectionString = "Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS=(PROTOCOL=TCP)(HOST=fhictora01.fhict.local)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=fhictora)));User ID=dbi338530;PASSWORD=Hoi;";
+        private static OracleConnection m_conn;
+        private static OracleCommand m_command;
+        private static string connectionString = "Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS=(PROTOCOL=TCP)(HOST=fhictora01.fhict.local)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=fhictora)));User ID=dbi338530;PASSWORD=Hoi;";
+
+        public static string acnaam { get; set; }
+        public static string ac { get; set; }
+        public static int acid { get; set; }
+        public static int ItemIDSelected { get; set; }
+        public static User user { get; set; }
+        public static User userBekijken { get; set; }
+
+        public static List<Review> reviewsProfile { get; set; }
+        public static List<string> chathistory { get; set; }
+        public static List<string> reviewsListAdmin { get; set; }
+        public static List<string> chats { get; set; }
+        public static List<string> reportedReviews { get; set; }
+        public static List<string> reportedChats { get; set; }
+        public static List<string> reportedRequests { get; set; }
+        public static List<string> reviewsRequests { get; set; }
+
+        /// Haalt het command-object op waarmee queries uitgevoerd kunnen worden.
+        public static OracleCommand Command { get { return m_command; } }
 
         // Open de verbinding met de database
         public static bool OpenConnection()
@@ -26,7 +45,10 @@ namespace tester.Models
                 if (m_conn.State != System.Data.ConnectionState.Open)
                 { return true; }
             }
-            catch (Exception ex) { Console.WriteLine("Connection failed: " + ex.Message); }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Connection failed: " + ex.Message);
+            }
             return returnvalue;
         }
 
@@ -38,13 +60,7 @@ namespace tester.Models
             { Console.WriteLine("Connection failed: " + ex.Message); }
         }
 
-        /// Haalt het command-object op waarmee queries uitgevoerd kunnen worden.
-        public static OracleCommand Command { get { return m_command; } }
-
         //Rechard
-        public static string acnaam = string.Empty;
-        public static string ac;
-        public static int acid;
         public static bool Login(string username, string password)
         {
             string result = "no";
@@ -121,13 +137,12 @@ namespace tester.Models
         } //goodluck! </Rechard>  
 
         // CHATHALEN <RECHARD>
-        public static List<string> chathistory = new List<string>();
         public static string chatbox(int needy, int volunteer)
         {
             chathistory.Clear();
-            string bericht = "";
-            string hetzender = "";
-            string chatstring = "";
+            string bericht = string.Empty;
+            string hetzender = string.Empty;
+            string chatstring = string.Empty;
             try
             {
                 OpenConnection();
@@ -223,8 +238,6 @@ namespace tester.Models
         }
 
         // Profile <OLAF>
-        public static User user;
-        public static User userBekijken;
         public static void Profile(int acid, bool a)
         {
 
@@ -272,7 +285,7 @@ namespace tester.Models
         }
 
         //Review voor profile door <OLAF>
-        public static List<Review> reviewsProfile = new List<Review>();
+
         public static void getMyReviews(int acid)
         {
             try
@@ -399,7 +412,6 @@ namespace tester.Models
 
         // REVIEWID - OPMERKINGEN, CHATID - BERICHT, HULPVRAAGID - OMSCHRIJVING
         // Get ID from selected chat/review/request to change visibility/reported// Raphael
-        public static int ItemIDSelected;
         public static bool getSelected(string column, string message, string IDFromWich, string nameOfMessage)
         {
             bool ok = false;
@@ -419,7 +431,7 @@ namespace tester.Models
                     while (_Reader.Read())
                     {
 
-                        ItemIDSelected = (Convert.ToInt32(_Reader["" + IDFromWich + ""]));
+                        ItemIDSelected = (Convert.ToInt32(_Reader[IDFromWich]));
 
                     }
                 }
@@ -459,7 +471,6 @@ namespace tester.Models
         }
 
         // GetReviews admin <Raphael>
-        public static List<string> reviewsListAdmin = new List<string>();
         public static bool getReviewAdmin()
         {
             reviewsListAdmin.Clear();
@@ -491,7 +502,6 @@ namespace tester.Models
         }
 
         // GetChat admin <Raphael>
-        public static List<string> chats = new List<string>();
         public static bool getChat()
         {
             chats.Clear();
@@ -528,7 +538,6 @@ namespace tester.Models
         }
 
         // GetReported reviews admin <Raphael>
-        public static List<string> reportedReviews = new List<string>();
         public static bool getReportedReviews()
         {
             bool ok = false;
@@ -560,7 +569,6 @@ namespace tester.Models
         }
 
         // GetreportedChat admin <Raphael>
-        public static List<string> reportedChats = new List<string>();
         public static bool getreportedChat()
         {
             bool ok = false;
@@ -597,7 +605,6 @@ namespace tester.Models
         }
 
         // GetReported requests admin <Raphael>
-        public static List<string> reportedRequests = new List<string>();
         public static bool getReportedRequests()
         {
             bool ok = false;
@@ -644,7 +651,6 @@ namespace tester.Models
         }
 
         // GetRequests admin <Raphael>
-        public static List<string> reviewsRequests = new List<string>();
         public static bool getRequests()
         {
             bool ok = false;
@@ -714,7 +720,7 @@ namespace tester.Models
                             DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
                             DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
                             Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), a, _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
-                           
+
                             if (requests.Contains(request) != true)
                             {
                                 requests.Add(request);
@@ -732,23 +738,17 @@ namespace tester.Models
             return requests;
         }
         //melvin Add 1 user in tabel intresse toevoegen 
-        public static void intresse(int RequestID,int accountID)
+        public static void intresse(int RequestID, int accountID)
         {
-
-
             try
             {
                 OpenConnection();                   // om connection open te maken
                 m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
                 m_command.Connection = m_conn;      // een connection maken met het command
-             
-                   
-                        m_command.CommandText = "INSERT INTO INTRESSE (HULPVRAAGID,GebruikerID) VALUES (:HULPVRAAGID,:GebruikerID)";
-                        m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = RequestID;
-                        m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountID;
-                        m_command.ExecuteNonQuery();
-
-                
+                m_command.CommandText = "INSERT INTO INTRESSE (HULPVRAAGID,GebruikerID) VALUES (:HULPVRAAGID,:GebruikerID)";
+                m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = RequestID;
+                m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountID;
+                m_command.ExecuteNonQuery();
             }
             catch (OracleException ex)
             {
@@ -756,11 +756,5 @@ namespace tester.Models
                 Console.WriteLine(ex.Message);
             }
         }
-       
     }
-
-
 }
-
-
-

@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace tester.Controllers
+﻿namespace tester.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
     public class UserController : Controller
     {
         // GET: User
         public ActionResult Needy()
         {
-            return View();
+            return this.View();
         }
 
         public ActionResult Volunteer()
         {
 
-            return View("VolunteerIntrested");
+            return this.View("VolunteerIntrested");
         }
 
         public ActionResult Admin()
         {
-            
-            return View();
+            return this.View();
         }   
     }
 
