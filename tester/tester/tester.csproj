@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\Online.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\User.cs" />

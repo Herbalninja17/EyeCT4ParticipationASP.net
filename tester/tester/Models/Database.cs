@@ -233,7 +233,7 @@ namespace tester.Models
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT Gebruikersnaam, Email, Woonplaats, Adres, Telefoonnummer FROM gebruiker WHERE GebruikerID = :accid";
+                m_command.CommandText = "SELECT GebruikerID, Gebruikersnaam, Email, Woonplaats, Adres, Telefoonnummer FROM gebruiker WHERE GebruikerID = :accid";
                 m_command.Parameters.Add("accid", OracleDbType.Int32).Value = acid;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
