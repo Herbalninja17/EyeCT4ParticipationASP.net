@@ -53,9 +53,9 @@
         }
 
         [HttpPost]
-        public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone)
+        public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone, string aboutme)
         {
-            Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N");
+            Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N", aboutme);
             return this.View();
         }
 

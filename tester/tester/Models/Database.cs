@@ -95,7 +95,8 @@
             return ok;
         }
 
-        public static void RegesterUser(string username, string password, string acctype, string email, string fullname, string address, string city, int phone, string gender, string rfid, string yncar, string ynlicence)
+        // Register
+        public static void RegesterUser(string username, string password, string acctype, string email, string fullname, string address, string city, int phone, string gender, string rfid, string yncar, string ynlicence, string aboutMe)
         {
             int AutoID = 0;
             try
@@ -112,7 +113,7 @@
                         AutoID = Convert.ToInt32(_Reader["COUNT(GebruikerID)"]) + 1;
                     }
                 }
-                m_command.CommandText = "INSERT INTO Gebruiker (GebruikerID, Gebruikersnaam, Wachtwoord, Naam, Geslacht, Adres, Woonplaats, Telefoonnummer, HeeftRijbewijs, HeeftAuto, Email, Gebruikerstype, Rfidcode) VALUES (:GebruikerID, :Gebruikersnaam, :Wachtwoord, :Naam, :Geslacht, :Adres, :Woonplaats, :Telefoonnummer, :rij, :auto, :Email, :Gebruikerstype, :rfid)";
+                m_command.CommandText = "INSERT INTO Gebruiker (GebruikerID, Gebruikersnaam, Wachtwoord, Naam, Geslacht, Adres, Woonplaats, Telefoonnummer, HeeftRijbewijs, HeeftAuto, Email, Gebruikerstype, Rfidcode, ABOUTME) VALUES (:GebruikerID, :Gebruikersnaam, :Wachtwoord, :Naam, :Geslacht, :Adres, :Woonplaats, :Telefoonnummer, :rij, :auto, :Email, :Gebruikerstype, :rfid, :AboutMe)";
                 m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = AutoID;
                 m_command.Parameters.Add("Gebruikersnaam", OracleDbType.Varchar2).Value = username;
                 m_command.Parameters.Add("Wachtwoord", OracleDbType.Varchar2).Value = password;
@@ -126,6 +127,7 @@
                 m_command.Parameters.Add("Email", OracleDbType.Varchar2).Value = email;
                 m_command.Parameters.Add("Gebruikerstype", OracleDbType.Varchar2).Value = acctype;
                 m_command.Parameters.Add("rfid", OracleDbType.Varchar2).Value = rfid;
+                m_command.Parameters.Add("AboutMe", OracleDbType.Varchar2).Value = aboutMe;
 
                 m_command.ExecuteNonQuery();
             }

@@ -15,6 +15,16 @@
     background: transparent; /* make scrollbar invisible */
 }
 
+/*Postfield Register*/
+#postfield {
+    float:right;
+}
+
+/*Info fields Register*/
+#RegisterFields {
+    float: left;
+}
+
 /*Raphael CSS for Admin*/
 .boxed {
     border: 1px solid green;
