@@ -42,7 +42,7 @@ namespace tester.Models
         public static OracleCommand Command { get { return m_command; } }
 
         //Rechard
-        public static string acnaam = "";
+        public static string acnaam = string.Empty;
         public static string ac;
         public static int acid;
         public static bool Login(string username, string password)
@@ -153,8 +153,41 @@ namespace tester.Models
                 Console.WriteLine(ex.Message);
             }
             return bericht;
-
         }
+
+        //public static List<string> openchats = new List<string>();
+        //public static string chatlist(int id)
+        //{
+        //    chathistory.Clear();
+        //    string bericht = "";
+        //    string hetzender = "";
+        //    string chatstring = "";
+        //    try
+        //    {
+        //        OpenConnection();
+        //        m_command = new OracleCommand();
+        //        m_command.Connection = m_conn;
+        //        m_command.CommandText = "SELECT c.Bericht, c.Zender, g.Gebruikersnaam from Chat c LEFT JOIN Gebruiker g ON c.Zender = g.GebruikerID WHERE c.GebruikerID = :needy OR c.GebruikerID2 = :volunteer ORDER BY ChatID ";
+        //        m_command.Parameters.Add("needy", OracleDbType.Varchar2).Value = id;
+        //        m_command.Parameters.Add("volunteer", OracleDbType.Varchar2).Value = id;
+        //        m_command.ExecuteNonQuery();
+        //        using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+        //        {
+        //            while (_Reader.Read())
+        //            {
+        //                hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
+        //                bericht = Convert.ToString(_Reader["Bericht"]);
+        //                chatstring = hetzender + ": " + bericht;
+        //                chathistory.Add(chatstring);
+        //            }
+        //        }
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return bericht;
+        //}
 
         // CHAT INSERTS <RECHARD>
         public static void chatsend(int needy, int volunteer, string bericht, int zender)
@@ -627,12 +660,12 @@ namespace tester.Models
                 {
                     while (_Reader.Read())
                     {
-                        //string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
-                        //ac = acctype;
-                        //int accID = Convert.ToInt32(_Reader["GebruikerID"]);
-                        //acID = accID;
-                        //result = Convert.ToString(_Reader["Gebruikersnaam"]);
-                        //if (result == username) { ok = true; }
+                        // string acctype = Convert.ToString(_Reader["Gebruikerstype"]);
+                        // ac = acctype;
+                        // int accID = Convert.ToInt32(_Reader["GebruikerID"]);
+                        // acID = accID;
+                        // result = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        // if (result == username) { ok = true; }
                         reviewsRequests.Add(Convert.ToString(_Reader["OMSCHRIJVING"]));
 
                     }
