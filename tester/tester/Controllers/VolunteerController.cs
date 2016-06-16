@@ -17,17 +17,17 @@
             return this.View();
         }
 
-        [HttpGet]
-        public ActionResult selectRequest(int RequestID)
+        
+        public ActionResult showInterest(int RequestID)
         {
-            Database.intresse(RequestID, 2);
+            Database.intresse(RequestID, tester.Models.Database.acid);
             return this.RedirectToAction("VolunteerIntrested", "Volunteer");
         }
         // GET: Volunteer
      [HttpGet]
         public ActionResult VolunteerIntrested()
         {
-            var requests = Database.GetAllVisibleRequests(2);
+            var requests = Database.GetAllVisibleRequests(tester.Models.Database.acid);
             return this.View(requests);
         }
 
