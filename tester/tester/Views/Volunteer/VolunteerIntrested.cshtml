@@ -15,7 +15,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">@hulpvraag.description</h3>
-                    <a href="@Url.Action("selectRequest", "Volunteer", new { RequestID = hulpvraag.requestID })">Select</a> 
+                    <a href="@Url.Action("showInterest", "Volunteer", new { RequestID = hulpvraag.requestID })">Interested</a> 
+                    <a href="@Url.Action("reportContent", "Volunteer", new { RequestID = hulpvraag.requestID })">Report</a> 
                 </div>
                 <div class="panel-body">
                     <b>Locatie: </b>@hulpvraag.location <br>
@@ -30,7 +31,7 @@
         }
     </div>
     <div id="buttons">
-        <input type="submit" name="interestedBTN" value="interested">
-        <input type="submit" name="Report" value="Report" />
+        @*<input type="submit" name="interestedBTN" value="interested">
+        <input type="submit" name="Report" value="Report" />*@
     </div>
 }
