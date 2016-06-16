@@ -648,7 +648,7 @@ namespace tester.Models
 
         }
         //Melvin get All requests die visible zijn
-        public static List<Request> GetAllVisibleRequests()
+        public static List<Request> GetAllVisibleRequests(int userID)
         {
             List<Request> requests = new List<Request>();
 
@@ -657,7 +657,8 @@ namespace tester.Models
                 OpenConnection();                   // om connection open te maken
                 m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
                 m_command.Connection = m_conn;      // een connection maken met het command
-                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y' ORDER BY HULPVRAAGID";
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y' AND HULPVRAAGID NOT IN(SELECT HULPVRAAGID FROM INTRESSE WHERE GEBRUIKERID =:gebruikerid) ORDER BY HULPVRAAGID ";
+                m_command.Parameters.Add("gebruikerid", OracleDbType.Int32).Value = userID;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
@@ -697,7 +698,32 @@ namespace tester.Models
             }
             return requests;
         }
+        //melvin Add 1 user in tabel intresse toevoegen 
+        public static void intresse(int RequestID,int accountID)
+        {
 
+
+            try
+            {
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+             
+                   
+                        m_command.CommandText = "INSERT INTO INTRESSE (HULPVRAAGID,GebruikerID) VALUES (:HULPVRAAGID,:GebruikerID)";
+                        m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = RequestID;
+                        m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountID;
+                        m_command.ExecuteNonQuery();
+
+                
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+        }
+       
     }
 
 

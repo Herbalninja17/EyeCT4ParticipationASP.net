@@ -16,8 +16,8 @@ namespace tester.Controllers
 
         public ActionResult Volunteer()
         {
-        
-            return View();
+
+            return View("VolunteerIntrested");
         }
 
         public ActionResult Admin()

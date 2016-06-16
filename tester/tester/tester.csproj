@@ -143,7 +143,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\User\Needy.cshtml" />
-    <Content Include="Views\User\Volunteer.cshtml" />
     <Content Include="Views\User\Admin.cshtml" />
     <Content Include="Views\Login\Profile.cshtml" />
     <Content Include="Views\Chat\Chatbox.cshtml" />
