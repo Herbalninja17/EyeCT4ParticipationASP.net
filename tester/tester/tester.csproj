@@ -117,6 +117,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NeedyController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -144,7 +145,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\User\Needy.cshtml" />
-    <Content Include="Views\User\Volunteer.cshtml" />
     <Content Include="Views\User\Admin.cshtml" />
     <Content Include="Views\Login\Profile.cshtml" />
     <Content Include="Views\Chat\Chatbox.cshtml" />
@@ -157,6 +157,7 @@
     <Content Include="Views\Admin\reportedRequest.cshtml" />
     <Content Include="Views\Needy\Requests.cshtml" />
     <Content Include="Views\Volunteer\VolunteerIntrested.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
