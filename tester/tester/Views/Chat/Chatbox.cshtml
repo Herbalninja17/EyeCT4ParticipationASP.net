@@ -5,6 +5,8 @@
 
 <h2>Chatbox</h2>
 
+
+
 @using (@Html.BeginForm())
 {
     <div class="chatpage">
@@ -40,6 +42,20 @@
             </div>
         </div>
     </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        var $cont = $('.chat');
+        $cont[0].scrollTop = $cont[0].scrollHeight;
+
+        $('.inp').keyup(function (e) {
+            if (e.keyCode == 13) {
+                $cont.append('<p>' + $(this).val() + '</p>');
+                $cont[0].scrollTop = $cont[0].scrollHeight;
+                $(this).val('');
+            }
+        })
+        .focus();
+    </script>
     <br />
     <br />
 }

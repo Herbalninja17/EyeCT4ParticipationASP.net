@@ -159,7 +159,8 @@ textarea {
     float: right;
     height: 90%;
     width: 75%;
-    overflow: scroll;
+    overflow-y: auto;
+
 }
 
 .textbox
