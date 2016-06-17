@@ -1,40 +1,51 @@
-﻿@{
+﻿@model IEnumerable<tester.Models.ChatUser>
+@{
     ViewBag.Title = "Chatbox";
 }
 
 <h2>Chatbox</h2>
 
- @using (@Html.BeginForm())
- {
+@using (@Html.BeginForm())
+{
     <div class="chatpage">
 
         <div class="chatbox">
             <div class="chatlist">
+                @if (Model != null)
+                {
+                    foreach (var chat in Model)
+                    {
+                        @Html.ActionLink(chat.naam, "Chatbox", "Chat", new { id = chat.userID }, null)<br>
+                    }
+                    
+                }
             </div>
-            <div class="chat"> 
+            <div class="chat">
                 @if (tester.Models.Database.chathistory.Count() > 0)
                 {
-                    
+
                     foreach (string chat in tester.Models.Database.chathistory)
                     {
-                        @chat.ToString() <br/>
-                     
+
+                        @chat.ToString() <br />
                     }
                 }
                 @ViewBag.nochat
 
-                
-            </div> 
+
+            </div>
             <div class="reply">
-                <div class="r1"><input class="textbox" type="text" name="msg" placeholder="Write a reply" size="100"></div>
+                <div class="r1"><input class="textbox" type="text" name="msg" placeholder="Write a reply"></div>
                 <div class="r2"><input class="submitbtn" type="submit" name="send" value="Send"></div>
-            </div>  
-            
+            </div>
         </div>
     </div>
- }
+    <br />
+    <br />
+}
+
+sddsd
 
 
-<br />
-<br />
+
 
