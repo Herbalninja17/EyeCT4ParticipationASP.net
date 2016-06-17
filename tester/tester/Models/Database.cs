@@ -20,6 +20,8 @@
         public static User user { get; set; }
         public static User userBekijken { get; set; }
 
+        public static bool online { get; set; }
+
         public static List<Review> reviewsProfile = new List<Review>();
         public static List<string> chathistory = new List<string>();
         public static List<string> reviewsListAdmin = new List<string>();
@@ -84,6 +86,7 @@
                         acnaam = result;
                         acid = Convert.ToInt32(_Reader["GebruikerID"]);
                         if (result == username) { ok = true; }
+                        Online online = new Online();
                     }
                 }
             }
@@ -792,6 +795,38 @@
                 Console.WriteLine(ex.Message);
             }
             return volunteers;
+        }
+
+        public static void placeReview(int beoordeling, string opmerkingen, int needyID, int volunteerID)
+        {
+            int this_reviewID = 0;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT COUNT(ReviewID) from Review";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        this_reviewID = Convert.ToInt32(_Reader["COUNT(ReviewID)"]) + 1;
+                    }
+                }
+
+                m_command.CommandText = "INSERT INTO Review(ReviewID, Beoordeling, Opmerkingen, NeedyID, VolunteerID, ISREPORTED, ISVISIBLE) VALUES(:ReviewID, :Beoordeling, :Opmerkingen, :NeedyID, :VolunteerID, 'N', 'Y')";
+                Command.Parameters.Add("ReviewID", OracleDbType.Int32).Value = this_reviewID;
+                Command.Parameters.Add("Beoordeling", OracleDbType.Varchar2).Value = beoordeling.ToString();
+                Command.Parameters.Add("Opmerkingen", OracleDbType.Varchar2).Value = opmerkingen;
+                Command.Parameters.Add("NeedyID", OracleDbType.Int32).Value = acid;
+                Command.Parameters.Add("VolunteerID", OracleDbType.Int32).Value = volunteerID;
+                Command.ExecuteNonQuery();
+            }
+            catch (OracleException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

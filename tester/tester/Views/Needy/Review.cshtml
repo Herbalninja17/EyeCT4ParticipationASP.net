@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Review";
+}
+
+<h2>Review over @ViewBag.volnaam</h2>
+
+@using (Html.BeginForm())
+{
+    <input type="number" name="beoordeling" placeholder="1-5" min="1" max="5" /><br>
+    <input type="text" name="opmerkingen" placeholder="Opmerkingen" /><br>
+    <input type="submit" value="Review plaatsen"> <br>
+}

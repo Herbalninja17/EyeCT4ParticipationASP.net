@@ -152,7 +152,7 @@ textarea {
 {
     
     height: 400px;
-    width: 75%;
+    width: 100%;
     background-color: lightcoral;
     float: left;
 }
@@ -183,7 +183,8 @@ textarea {
 }
 
 .reply
-{    
+{   
+    
     background-color: black;
     height: 10%;
     width: 100%;

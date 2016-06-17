@@ -7,5 +7,6 @@ namespace tester.Models
 {
     public class Online
     {
+        public static bool online = false;
     }
 }

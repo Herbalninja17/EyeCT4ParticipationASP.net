@@ -11,33 +11,31 @@
 <body>
         <div class="menubar">
         <div class="menu">
-            @*@try {
-                if (Model.type == "Needy")
+            @{if ( tester.Models.Database.online == false)
                 {
-                @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Requests", "Requests", "Needy", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Inbox", "Chatbox", "Chat", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Username", "", "", new { area = "" }, new { @class = "tab" })
-                }
-                else if (Model.type == "Volunteer")
-                {
-                @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Requests", "Requests", "Needy", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink("Inbox", "Chatbox", "Chat", new { area = "" }, new { @class = "tab" })
-                @Html.ActionLink(Model.naam, "", "", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Sign in", "Index", "Login", new { area = "" }, new { @class = "tab" })  
                 }
                 else
-                {*@
-                    @Html.ActionLink("Home", "Index", "Login", new { area = "" }, new { @class = "tab" })
-                    @Html.ActionLink("Requests", "Requests", "Needy", new { area = "" }, new { @class = "tab" })
+                {
+                    if ( tester.Models.Database.ac == "Needy")
+                    {
+                    @Html.ActionLink("Requests", "Needy", "User", new { area = "" }, new { @class = "tab" })
                     @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
-                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { area = "" }, new { @class = "tab" })
-                    @Html.ActionLink("Username", "", "", new { area = "" }, new { @class = "tab" })
-                @*}
+                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { id = 0 }, new { @class = "tab" })
+                    @Html.ActionLink("Sign out", "", "", new { area = "" }, new { @class = "tab" })
+                    }
+                    else if (tester.Models.Database.ac == "Volunteer")
+                    {
+                    @Html.ActionLink("Requests()", "", "", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Interest", "Volunteer", "User", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { id = 0 }, new { @class = "tab" })
+                    @Html.ActionLink("Sign out", "", "", new { area = "" }, new { @class = "tab" })
+                    }
+                }
             }
-            catch { }*@
+            
             
         </div>
     </div>

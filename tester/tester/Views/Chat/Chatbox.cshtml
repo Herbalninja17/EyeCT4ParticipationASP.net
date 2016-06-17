@@ -9,27 +9,32 @@
     <div class="chatpage">
 
         <div class="chatbox">
+            <div class="chatlist">
+            </div>
             <div class="chat"> 
                 @if (tester.Models.Database.chathistory.Count() > 0)
                 {
+                    
                     foreach (string chat in tester.Models.Database.chathistory)
                     {
                         @chat.ToString() <br/>
                     <a href="@Url.Action("reportChat", "Chat", new { chat = chat })">Report</a>
                     }
                 }
-            </div>         
-        
-            <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
-            <script type="text/javascript" > 
-            </script>
-            
+                @ViewBag.nochat
+
+                
+            </div> 
             <div class="reply">
                 <div class="r1"><input class="textbox" type="text" name="msg" placeholder="Write a reply" size="100"></div>
                 <div class="r2"><input class="submitbtn" type="submit" name="send" value="Send"></div>
-            </div>
+            </div>  
+            
         </div>
     </div>
  }
-<br /><br />
+
+
+<br />
+<br />
 

@@ -25,7 +25,11 @@
         [HttpGet]
         public ActionResult Chatbox(int id)
         {
-            if (Database.ac == "Volunteer")
+            if(id == 0)
+            {
+                ViewBag.nochat = "*Choose someone to chat with*";
+            }
+            else if (Database.ac == "Volunteer")
             {
                 Database.chatbox(id, Database.acid);
                 volunteer = Database.acid;

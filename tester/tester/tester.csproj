@@ -158,6 +158,8 @@
     <Content Include="Views\Needy\Requests.cshtml" />
     <Content Include="Views\Volunteer\VolunteerIntrested.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\User\Volunteer.cshtml" />
+    <Content Include="Views\Needy\Review.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -27,14 +27,17 @@
             {
                 if (Database.ac == "Needy")
                 {
+                    Database.online = true;
                     return this.RedirectToAction("Needy", "User");
                 }
                 else if (Database.ac == "Volunteer")
                 {
-                    return this.RedirectToAction("VolunteerIntrested", "Volunteer");
+                    Database.online = true;
+                    return this.RedirectToAction("Volunteer", "User");
                 }
                 else if (Database.ac == "Admin")
                 {
+                    Database.online = true;
                     return this.RedirectToAction("Chats", "Admin");
                 }
             }
