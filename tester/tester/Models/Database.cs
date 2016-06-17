@@ -20,6 +20,8 @@
         public static User user { get; set; }
         public static User userBekijken { get; set; }
 
+        public static bool online { get; set; }
+
         public static List<Review> reviewsProfile = new List<Review>();
         public static List<string> chathistory = new List<string>();
         public static List<string> reviewsListAdmin = new List<string>();
