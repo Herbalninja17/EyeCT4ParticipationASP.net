@@ -23,19 +23,20 @@
             Database.intresse(RequestID, tester.Models.Database.acid);
             return this.RedirectToAction("VolunteerIntrested", "Volunteer");
         }
+
+        public ActionResult reportRequest(int RequestID)
+        {
+            Database.alterYorN("HULPVRAAG", RequestID, "HULPVRAAGID", "ISREPORTED", "Y");
+            return this.RedirectToAction("VolunteerIntrested", "Volunteer");
+        }
+
         // GET: Volunteer
-     [HttpGet]
+        [HttpGet]
         public ActionResult VolunteerIntrested()
         {
             var requests = Database.GetAllVisibleRequests(tester.Models.Database.acid);
             return this.View(requests);
         }
 
-   /*public ActionResult selectChat(string message)
-     {
-         Database.getSelected("HULPVRAAG", message, "HULPVRAAGID", "BERICHT");
-         return this.RedirectToAction("Chats", "Admin");
-     }
-    */
     }
 }

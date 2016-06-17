@@ -16,7 +16,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">@hulpvraag.description</h3>
                     <a href="@Url.Action("showInterest", "Volunteer", new { RequestID = hulpvraag.requestID })">Interested</a> 
-                    <a href="@Url.Action("reportContent", "Volunteer", new { RequestID = hulpvraag.requestID })">Report</a> 
+                    <a href="@Url.Action("reportRequest", "Volunteer", new { RequestID = hulpvraag.requestID })">Report</a> 
                 </div>
                 <div class="panel-body">
                     <b>Locatie: </b>@hulpvraag.location <br>

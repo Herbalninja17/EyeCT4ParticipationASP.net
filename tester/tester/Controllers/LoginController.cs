@@ -53,9 +53,9 @@
         }
 
         [HttpPost]
-        public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone)
+        public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone, string aboutme)
         {
-            Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N");
+            Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N", aboutme);
             return this.View();
         }
 
@@ -75,6 +75,7 @@
             ViewBag.woonplaats = string.Empty;
             ViewBag.adres = string.Empty;
             ViewBag.telefoon = string.Empty;
+            ViewBag.aboutme = string.Empty;
 
             if (Database.acid != 0)
             {
@@ -85,6 +86,7 @@
                 ViewBag.woonplaats = user.woonplaats;
                 ViewBag.adres = user.adres;
                 ViewBag.telefoon = user.telefoonnummer;
+                ViewBag.aboutme = user.AboutMe;
                 Database.getMyReviews(Database.acid);
                 if (Database.reviewsProfile.Count == 0)
                 {
@@ -114,6 +116,7 @@
             ViewBag.woonplaats = user.woonplaats;
             ViewBag.adres = user.adres;
             ViewBag.telefoon = user.telefoonnummer;
+            ViewBag.aboutme = user.AboutMe;
             Database.getMyReviews(acID);
             if (Database.reviewsProfile.Count == 0)
             {

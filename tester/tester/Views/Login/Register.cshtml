@@ -8,23 +8,34 @@
 
 @using (@Html.BeginForm())
 {
-    <div class="error">@ViewBag.loginfail<br></div>
-    <div>
-        User type:
-        <select name="type">
-            <option value="Needy">Needy</option>
-            <option value="Volunteer">Volunteer</option>
-        </select>
+    <div id="page">
+        <div class="error">@ViewBag.loginfail<br></div>
+        <div>
+            User type:
+            <select name="type">
+                <option value="Needy">Needy</option>
+                <option value="Volunteer">Volunteer</option>
+            </select>
+        </div>
+
+        <div id="RegisterFields">
+            <input type="text" name="username" placeholder="Username"><br>
+            <input type="password" name="password" placeholder="Password"><br>
+            <input type="text" name="email" placeholder="Email"><br>
+            <input type="text" name="name" placeholder="Full name"><br>
+            <input type="text" name="address" placeholder="Address"><br>
+            <input type="text" name="city" placeholder="City"><br>
+            <input type="text" name="phone" placeholder="Phone number"><br>
+            <input type="checkbox" name="rfid" placeholder="RFID">@Html.Label("RFID");<br>
+            <input type="checkbox" name="auto" placeholder="Car">@Html.Label("Car");<br>
+            <input type="checkbox" name="rijbewijs" placeholder="License">@Html.Label("License");<br>
+            <input type="submit" name="Register" value="Submit" @*onclick="location.href='@Url.Action("Home", "Login")'"*@>
+        </div>
+
+        <div id="postfield">
+            <textarea name="aboutme" rows="15" cols="150">
+                Vul iets in over uzelf.....
+            </textarea>
+        </div>
     </div>
-    <input type="text" name="username" placeholder="Username"><br>
-    <input type="password" name="password" placeholder="Password"><br>
-    <input type="text" name="email" placeholder="Email"><br>
-    <input type="text" name="name" placeholder="Full name"><br>
-    <input type="text" name="address" placeholder="Address"><br>
-    <input type="text" name="city" placeholder="City"><br>
-    <input type="text" name="phone" placeholder="Phone number"><br>
-    <input type="checkbox" name="rfid" placeholder="RFID">@Html.Label("RFID");<br>
-    <input type="checkbox" name="auto" placeholder="Car">@Html.Label("Car");<br>
-    <input type="checkbox" name="rijbewijs" placeholder="License">@Html.Label("License");<br>
-    <input type="submit" name="Register" value="Submit" @*onclick="location.href='@Url.Action("Home", "Login")'"*@>
 }

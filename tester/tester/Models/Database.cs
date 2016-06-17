@@ -96,7 +96,8 @@
             return ok;
         }
 
-        public static void RegesterUser(string username, string password, string acctype, string email, string fullname, string address, string city, int phone, string gender, string rfid, string yncar, string ynlicence)
+        // Register
+        public static void RegesterUser(string username, string password, string acctype, string email, string fullname, string address, string city, int phone, string gender, string rfid, string yncar, string ynlicence, string aboutMe)
         {
             int AutoID = 0;
             try
@@ -113,7 +114,7 @@
                         AutoID = Convert.ToInt32(_Reader["COUNT(GebruikerID)"]) + 1;
                     }
                 }
-                m_command.CommandText = "INSERT INTO Gebruiker (GebruikerID, Gebruikersnaam, Wachtwoord, Naam, Geslacht, Adres, Woonplaats, Telefoonnummer, HeeftRijbewijs, HeeftAuto, Email, Gebruikerstype, Rfidcode) VALUES (:GebruikerID, :Gebruikersnaam, :Wachtwoord, :Naam, :Geslacht, :Adres, :Woonplaats, :Telefoonnummer, :rij, :auto, :Email, :Gebruikerstype, :rfid)";
+                m_command.CommandText = "INSERT INTO Gebruiker (GebruikerID, Gebruikersnaam, Wachtwoord, Naam, Geslacht, Adres, Woonplaats, Telefoonnummer, HeeftRijbewijs, HeeftAuto, Email, Gebruikerstype, Rfidcode, ABOUTME) VALUES (:GebruikerID, :Gebruikersnaam, :Wachtwoord, :Naam, :Geslacht, :Adres, :Woonplaats, :Telefoonnummer, :rij, :auto, :Email, :Gebruikerstype, :rfid, :AboutMe)";
                 m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = AutoID;
                 m_command.Parameters.Add("Gebruikersnaam", OracleDbType.Varchar2).Value = username;
                 m_command.Parameters.Add("Wachtwoord", OracleDbType.Varchar2).Value = password;
@@ -127,6 +128,7 @@
                 m_command.Parameters.Add("Email", OracleDbType.Varchar2).Value = email;
                 m_command.Parameters.Add("Gebruikerstype", OracleDbType.Varchar2).Value = acctype;
                 m_command.Parameters.Add("rfid", OracleDbType.Varchar2).Value = rfid;
+                m_command.Parameters.Add("AboutMe", OracleDbType.Varchar2).Value = aboutMe;
 
                 m_command.ExecuteNonQuery();
             }
@@ -247,7 +249,7 @@
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT GebruikerID, Gebruikersnaam, Email, Woonplaats, Adres, Telefoonnummer FROM gebruiker WHERE GebruikerID = :accid";
+                m_command.CommandText = "SELECT GebruikerID, Gebruikersnaam, Email, Woonplaats, Adres, Telefoonnummer, ABOUTME FROM gebruiker WHERE GebruikerID = :accid";
                 m_command.Parameters.Add("accid", OracleDbType.Int32).Value = acid;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
@@ -256,18 +258,19 @@
                     {
                         while (_Reader.Read())
                         {
-                            string naam = Convert.ToString(_Reader["Gebruikersnaam"]);
-                            string email = Convert.ToString(_Reader["Email"]);
-                            string woonplaats = Convert.ToString(_Reader["Woonplaats"]);
-                            string adres = Convert.ToString(_Reader["Adres"]);
+                            string naam = _Reader["Gebruikersnaam"].ToString();
+                            string email = _Reader["Email"].ToString();
+                            string woonplaats = _Reader["Woonplaats"].ToString();
+                            string adres = _Reader["Adres"].ToString();
                             int telefoon = Convert.ToInt32(_Reader["Telefoonnummer"]);
+                            string aboutme = _Reader["ABOUTME"].ToString();
                             if (a == true)
                             {
-                                user = new User(naam, email, woonplaats, adres, telefoon);
+                                user = new User(naam, email, woonplaats, adres, telefoon, aboutme);
                             }
                             else if (a == false)
                             {
-                                userBekijken = new User(naam, email, woonplaats, adres, telefoon);
+                                userBekijken = new User(naam, email, woonplaats, adres, telefoon, aboutme);
                             }
                         }
                     }
@@ -304,7 +307,7 @@
                     {
                         while (_Reader.Read())
                         {
-                            Review review = new Review(Convert.ToInt32(_Reader["reviewID"]), Convert.ToString(_Reader["beoordeling"]), Convert.ToString(_Reader["opmerkingen"]), Convert.ToInt32(_Reader["needyID"]), Convert.ToString(_Reader["needyNaam"]), Convert.ToInt32(_Reader["volunteerID"]), Convert.ToString(_Reader["volunteerNaam"]));
+                            Review review = new Review(Convert.ToInt32(_Reader["reviewID"]), _Reader["beoordeling"].ToString(), _Reader["opmerkingen"].ToString(), Convert.ToInt32(_Reader["needyID"]), _Reader["needyNaam"].ToString(), Convert.ToInt32(_Reader["volunteerID"]), _Reader["volunteerNaam"].ToString());
                             reviewsProfile.Add(review);
                         }
                     }
@@ -488,7 +491,7 @@
                     while (_Reader.Read())
                     {
 
-                        reviewsListAdmin.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
+                        reviewsListAdmin.Add(_Reader["OPMERKINGEN"].ToString());
 
                     }
                 }
@@ -525,7 +528,7 @@
                         //acID = accID;
                         //result = Convert.ToString(_Reader["Gebruikersnaam"]);
                         //if (result == username) { ok = true; }
-                        chats.Add(Convert.ToString(_Reader["BERICHT"]));
+                        chats.Add(_Reader["BERICHT"].ToString());
 
                     }
                 }
@@ -556,7 +559,7 @@
                     while (_Reader.Read())
                     {
 
-                        reportedReviews.Add(Convert.ToString(_Reader["OPMERKINGEN"]));
+                        reportedReviews.Add(_Reader["OPMERKINGEN"].ToString());
 
                     }
                 }
@@ -592,7 +595,7 @@
                         //acID = accID;
                         //result = Convert.ToString(_Reader["Gebruikersnaam"]);
                         //if (result == username) { ok = true; }
-                        reportedChats.Add(Convert.ToString(_Reader["BERICHT"]));
+                        reportedChats.Add(_Reader["BERICHT"].ToString());
 
                     }
                 }
@@ -638,7 +641,7 @@
                         //}
                         //if (query == "SELECT OMSCHRIJVING FROM HULPVRAAG WHERE ISREPORTED = 'N'")
                         //{
-                        reportedRequests.Add(Convert.ToString(_Reader["OMSCHRIJVING"]));
+                        reportedRequests.Add(_Reader["OMSCHRIJVING"].ToString());
                         //}
                     }
                 }
@@ -673,7 +676,7 @@
                         // acID = accID;
                         // result = Convert.ToString(_Reader["Gebruikersnaam"]);
                         // if (result == username) { ok = true; }
-                        reviewsRequests.Add(Convert.ToString(_Reader["OMSCHRIJVING"]));
+                        reviewsRequests.Add(_Reader["OMSCHRIJVING"].ToString());
 
                     }
                 }
@@ -769,7 +772,7 @@
                 OpenConnection();                   // om connection open te maken
                 m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
                 m_command.Connection = m_conn;      // een connection maken met het command
-                m_command.CommandText = "SELECT G.GEBRUIKERSNAAM, G.EMAIL, G.ADRES, G.WOONPLAATS, G.TELEFOONNUMMER , G.GEBRUIKERID FROM GEBRUIKER G, INTRESSE I, HULPVRAAG H WHERE H.HULPVRAAGID = :HULPVRAAGID AND H.HULPVRAAGID = I.HULPVRAAGID AND I.GEBRUIKERID = G.GEBRUIKERID";
+                m_command.CommandText = "SELECT G.GEBRUIKERSNAAM, G.EMAIL, G.ADRES, G.WOONPLAATS, G.TELEFOONNUMMER, G.ABOUTME, G.GEBRUIKERID FROM GEBRUIKER G, INTRESSE I, HULPVRAAG H WHERE H.HULPVRAAGID = :HULPVRAAGID AND H.HULPVRAAGID = I.HULPVRAAGID AND I.GEBRUIKERID = G.GEBRUIKERID";
                 m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = HulpvraagID;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Command.ExecuteReader())
@@ -778,7 +781,7 @@
                     {
                         while (_Reader.Read())
                         {
-                            Volunteer volunteer = new Volunteer(_Reader["GEBRUIKERSNAAM"].ToString(), _Reader["EMAIL"].ToString(), _Reader["ADRES"].ToString(), _Reader["WOONPLAATS"].ToString(), Convert.ToInt32(_Reader["TELEFOONNUMMER"]), Convert.ToInt32(_Reader["GEBRUIKERID"]));
+                            Volunteer volunteer = new Volunteer(_Reader["GEBRUIKERSNAAM"].ToString(), _Reader["EMAIL"].ToString(), _Reader["ADRES"].ToString(), _Reader["WOONPLAATS"].ToString(), Convert.ToInt32(_Reader["TELEFOONNUMMER"]), _Reader["ABOUTME"].ToString(), Convert.ToInt32(_Reader["GEBRUIKERID"]));
                             volunteers.Add(volunteer);
                         }
                     }

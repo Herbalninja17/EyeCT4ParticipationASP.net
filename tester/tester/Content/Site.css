@@ -15,6 +15,16 @@
     background: transparent; /* make scrollbar invisible */
 }
 
+/*Postfield Register*/
+#postfield {
+    float:right;
+}
+
+/*Info fields Register*/
+#RegisterFields {
+    float: left;
+}
+
 /*Raphael CSS for Admin*/
 .boxed {
     border: 1px solid green;
@@ -35,6 +45,7 @@
     float: right;
     width: 60%;
     height: 60vh;
+    overflow: scroll;
 }
 
 .Profilediv3 {
@@ -46,7 +57,7 @@
     border: 1px solid black;
     width: 60vw;
     height: 30vh;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 
 
