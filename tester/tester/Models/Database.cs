@@ -177,13 +177,10 @@
             return bericht;
         }
 
-        public static string chatboxlist(int id)
+        public static void chatboxlist(int id)
         {
-            chathistory.Clear();
+            //chathistory.Clear();
             chatUser.Clear();
-            string bericht = string.Empty;
-            string hetzender = string.Empty;
-            string chatstring = string.Empty;
             try
             {
                 OpenConnection();
@@ -196,24 +193,17 @@
                 {
                     while (_Reader.Read())
                     {
-                        hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        //hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
                         ChatUser cuser = new ChatUser(Convert.ToInt32(_Reader["GebruikerID"]), _Reader["Gebruikersnaam"].ToString());
                         chatUser.Add(cuser);
-                        chatlist.Add(hetzender);
+                        //chatlist.Add(hetzender);
                     }
-                    
-                        chatlist.Remove(acnaam);
-                        chatlist.Remove("");
-
-
-
                 }
             }
             catch (OracleException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return bericht;
         }
 
         //public static List<string> openchats = new List<string>();
