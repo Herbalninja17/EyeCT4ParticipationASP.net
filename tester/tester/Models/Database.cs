@@ -796,5 +796,57 @@
             }
             return volunteers;
         }
+
+        public static List<Request> GetAllVisibleInterestedRequests(int userID)
+        {
+            List<Request> requests = new List<Request>();
+
+            try
+            {
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y' AND HULPVRAAGID IN(SELECT HULPVRAAGID FROM INTRESSE WHERE GEBRUIKERID =:gebruikerid) ORDER BY HULPVRAAGID ";
+                m_command.Parameters.Add("gebruikerid", OracleDbType.Int32).Value = userID;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    if (_Reader.HasRows)
+                    {
+                        while (_Reader.Read())
+                        {
+                            bool a = false;
+                            if (Convert.ToString(_Reader["Urgent"]) == "Y")
+                            {
+                                a = true;
+                            }
+                            else if (Convert.ToString(_Reader["Urgent"]) == "N")
+                            {
+                                a = false;
+                            }
+                            CultureInfo provider = CultureInfo.InvariantCulture;
+                            string start = Convert.ToString(_Reader["STARTDATUM"]);
+                            string end = Convert.ToString(_Reader["EINDDATUM"]);
+                            DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
+                            DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
+                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), a, _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
+
+                            if (requests.Contains(request) != true)
+                            {
+                                requests.Add(request);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return requests;
+        }
+
     }
 }
