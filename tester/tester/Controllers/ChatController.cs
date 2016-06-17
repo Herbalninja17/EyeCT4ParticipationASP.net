@@ -51,5 +51,12 @@
             }
             return this.View(cuser);
         }
+
+        public ActionResult reportChat(string chat)
+        {
+            tester.Models.Database.getSelected("CHAT", chat, "CHATID", "BERICHT");
+            tester.Models.Database.alterYorN("CHAT", tester.Models.Database.ItemIDSelected, "CHATID", "ISREPORTED", "Y");
+            return View();
+        }
     }
 }

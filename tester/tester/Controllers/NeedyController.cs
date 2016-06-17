@@ -9,6 +9,8 @@
 
     public class NeedyController : Controller
     {
+        private static int volID;
+
         [HttpPost]
         public ActionResult Chats(int x)
         {
@@ -49,10 +51,19 @@
         }
 
         [HttpGet]
-        public ActionResult Reviews()
+        public ActionResult Review(string volnaam, int volid)
         {
+            ViewBag.volnaam = volnaam;
+            volID = volid;
             return this.View();
         }
 
+        [HttpPost]
+        public ActionResult Review(int beoordeling, string opmerkingen)
+        {
+            Database.placeReview(beoordeling, opmerkingen, Database.acid, volID);
+            volID = 0;
+            return RedirectToAction("Requests", "Needy");
+        }
     }
 }
