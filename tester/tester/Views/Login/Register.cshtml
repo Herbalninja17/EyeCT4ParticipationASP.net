@@ -17,25 +17,55 @@
                 <option value="Volunteer">Volunteer</option>
             </select>
         </div>
-
+        <br />
         <div id="RegisterFields">
-            <input type="text" name="username" placeholder="Username"><br>
-            <input type="password" name="password" placeholder="Password"><br>
-            <input type="text" name="email" placeholder="Email"><br>
-            <input type="text" name="name" placeholder="Full name"><br>
-            <input type="text" name="address" placeholder="Address"><br>
-            <input type="text" name="city" placeholder="City"><br>
-            <input type="text" name="phone" placeholder="Phone number"><br>
+            <div class="input-group">
+                <label for="usr">Username:</label>
+                <input type="text" name="username" class="form-control" placeholder="Username" id="usr">
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" name="password" class="form-control" placeholder="Password" id="pwd">
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="mail">E-mailadres:</label>
+                <input type="text" name="email" class="form-control" placeholder="E-mailadres" id="mail">
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="nm">Uw naam:</label>
+                <input type="text" name="name" class="form-control" placeholder="Uw volledige naam" id="nm">
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="ad">Adress:</label>
+                <input type="text" name="address" class="form-control" placeholder="Uw adres" id="ad">
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="ct">Woonplaats:</label>
+                <input type="text" name="city" class="form-control" placeholder="Woonplaats" id="ct">
+            </div>
+            <br />
+            <div class="input-group">
+                <label for="phn">Telefoonnummer:</label> <br />
+                <input type="text" name="phone" class="bfh-phone" placeholder="Telefoonnummer" id="phn">
+            </div>
+            <br />
+           
             <input type="checkbox" name="rfid" placeholder="RFID">@Html.Label("RFID");<br>
             <input type="checkbox" name="auto" placeholder="Car">@Html.Label("Car");<br>
             <input type="checkbox" name="rijbewijs" placeholder="License">@Html.Label("License");<br>
-            <input type="submit" name="Register" value="Submit" @*onclick="location.href='@Url.Action("Home", "Login")'"*@>
+            <input type="submit" name="Register" value="Submit" onclick="location.href='@Url.Action("Index", "Login")'" />
+
+            
         </div>
 
         <div id="postfield">
-            <textarea name="aboutme" rows="15" cols="150">
-                Vul iets in over uzelf.....
-            </textarea>
+            <label for="me">Vertel wat over uzelf:</label> <br />
+            <textarea class="span6" cols="150" rows="3" placeholder="Vul iets in over uzelf...." id="me"></textarea>
         </div>
     </div>
 }
