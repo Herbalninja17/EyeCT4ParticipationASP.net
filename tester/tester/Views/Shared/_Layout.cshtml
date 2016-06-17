@@ -23,7 +23,7 @@
                     {
                     @Html.ActionLink("Requests", "Needy", "User", new { area = "" }, new { @class = "tab" })
                     @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
-                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { id = 0 }, new { @class = "tab" })
                     @Html.ActionLink("Sign out", "", "", new { area = "" }, new { @class = "tab" })
                     }
                     else if (tester.Models.Database.ac == "Volunteer")
@@ -31,7 +31,7 @@
                     @Html.ActionLink("Requests", "VolunteerIntrested", "Volunteer", new { area = "" }, new { @class = "tab" })
                     @Html.ActionLink("Interest", "Volunteer", "User", new { area = "" }, new { @class = "tab" })
                     @Html.ActionLink("Profile", "Profile", "Login", new { area = "" }, new { @class = "tab" })
-                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { area = "" }, new { @class = "tab" })
+                    @Html.ActionLink("Inbox", "Chatbox", "Chat", new { id = 0 }, new { @class = "tab" })
                     @Html.ActionLink("Sign out", "", "", new { area = "" }, new { @class = "tab" })
                     }
                 }

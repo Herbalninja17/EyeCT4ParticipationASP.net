@@ -17,21 +17,29 @@
         [HttpPost]
         public ActionResult Chatbox(string msg)
         {
+            var cuser = Database.chatUser;
             Database.chatsend(needy, volunteer, msg, zender);
             Database.chatbox(needy, volunteer);
-            return this.View();
+            return this.View(cuser);
         }
 
         [HttpGet]
         public ActionResult Chatbox(int id)
         {
-            if (Database.ac == "Volunteer")
+            Database.chatboxlist(Database.acid);
+            var cuser = Database.chatUser;
+            if (id == 0)
+            {
+                ViewBag.nochat = "*Choose someone to chat with*";
+                return this.View(cuser);
+            }
+            else if (Database.ac == "Volunteer")
             {
                 Database.chatbox(id, Database.acid);
                 volunteer = Database.acid;
                 needy = id;
                 zender = volunteer;
-                return this.View();
+                return this.View(cuser);
             }
             else if (Database.ac == "Needy")
             {
@@ -39,9 +47,16 @@
                 volunteer = id;
                 zender = needy;
                 Database.chatbox(Database.acid, id);
-                return this.View();
+                return this.View(cuser);
             }
-            return this.View();
+            return this.View(cuser);
+        }
+
+        public ActionResult reportChat(string chat)
+        {
+            tester.Models.Database.getSelected("CHAT", chat, "CHATID", "BERICHT");
+            tester.Models.Database.alterYorN("CHAT", tester.Models.Database.ItemIDSelected, "CHATID", "ISREPORTED", "Y");
+            return View();
         }
     }
 }
