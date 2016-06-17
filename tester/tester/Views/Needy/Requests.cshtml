@@ -116,7 +116,7 @@
                     <h5><b>Geïnteresseerde vrijwilliger(s):</b></h5>
                     @foreach (var volunteers in tester.Models.Database.GetVolunteers(hulpvraag.requestID))
                     {
-                        @volunteers.naam @Html.ActionLink("     Klik hier om te chatten", "Chatbox", "Chat", new { id = volunteers.volunteerID}, null) <br>
+                        @volunteers.naam @Html.ActionLink("     Klik hier om te chatten", "Chatbox", "Chat", new { id = volunteers.volunteerID}, null) @Html.ActionLink("       Klik hier om te reviewen", "Review", "Needy", new { volnaam = volunteers.naam, volid = volunteers.volunteerID}, null) <br>
                     }
                 </div>
             }
