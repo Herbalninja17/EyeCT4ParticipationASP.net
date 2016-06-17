@@ -24,12 +24,14 @@
 
         public static List<Review> reviewsProfile = new List<Review>();
         public static List<string> chathistory = new List<string>();
+        public static List<string> chatlist = new List<string>();
         public static List<string> reviewsListAdmin = new List<string>();
         public static List<string> chats = new List<string>();
         public static List<string> reportedReviews = new List<string>();
         public static List<string> reportedChats = new List<string>();
         public static List<string> reportedRequests = new List<string>();
         public static List<string> reviewsRequests = new List<string>();
+        public static List<ChatUser> chatUser = new List<ChatUser>();
 
         /// Haalt het command-object op waarmee queries uitgevoerd kunnen worden.
         public static OracleCommand Command { get { return m_command; } }
@@ -166,6 +168,45 @@
                         chatstring = hetzender + ": " + bericht;
                         chathistory.Add(chatstring);
                     }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return bericht;
+        }
+
+        public static string chatboxlist(int id)
+        {
+            chathistory.Clear();
+            chatUser.Clear();
+            string bericht = string.Empty;
+            string hetzender = string.Empty;
+            string chatstring = string.Empty;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT g.GebruikerID, g.Gebruikersnaam from Chat c JOIN Gebruiker g ON c.Zender = g.GebruikerID WHERE c.GebruikerID = :ID OR c.GebruikerID2 = :ID GROUP BY g.Gebruikersnaam, g.GebruikerID";
+                m_command.Parameters.Add("ID", OracleDbType.Varchar2).Value = id;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        ChatUser cuser = new ChatUser(Convert.ToInt32(_Reader["GebruikerID"]), _Reader["Gebruikersnaam"].ToString());
+                        chatUser.Add(cuser);
+                        chatlist.Add(hetzender);
+                    }
+                    
+                        chatlist.Remove(acnaam);
+                        chatlist.Remove("");
+
+
+
                 }
             }
             catch (OracleException ex)
