@@ -15,6 +15,7 @@
                     foreach (string chat in tester.Models.Database.chathistory)
                     {
                         @chat.ToString() <br/>
+                    <a href="@Url.Action("reportChat", "Chat", new { chat = chat })">Report</a>
                     }
                 }
             </div>         
