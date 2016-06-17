@@ -24,14 +24,12 @@
 
         public static List<Review> reviewsProfile = new List<Review>();
         public static List<string> chathistory = new List<string>();
-        public static List<string> chatlist = new List<string>();
         public static List<string> reviewsListAdmin = new List<string>();
         public static List<string> chats = new List<string>();
         public static List<string> reportedReviews = new List<string>();
         public static List<string> reportedChats = new List<string>();
         public static List<string> reportedRequests = new List<string>();
         public static List<string> reviewsRequests = new List<string>();
-        public static List<ChatUser> chatUser = new List<ChatUser>();
 
         /// Haalt het command-object op waarmee queries uitgevoerd kunnen worden.
         public static OracleCommand Command { get { return m_command; } }
@@ -175,35 +173,6 @@
                 Console.WriteLine(ex.Message);
             }
             return bericht;
-        }
-
-        public static void chatboxlist(int id)
-        {
-            //chathistory.Clear();
-            chatUser.Clear();
-            try
-            {
-                OpenConnection();
-                m_command = new OracleCommand();
-                m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT g.GebruikerID, g.Gebruikersnaam from Chat c JOIN Gebruiker g ON c.Zender = g.GebruikerID WHERE c.GebruikerID = :ID OR c.GebruikerID2 = :ID GROUP BY g.Gebruikersnaam, g.GebruikerID";
-                m_command.Parameters.Add("ID", OracleDbType.Varchar2).Value = id;
-                m_command.ExecuteNonQuery();
-                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
-                {
-                    while (_Reader.Read())
-                    {
-                        //hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
-                        ChatUser cuser = new ChatUser(Convert.ToInt32(_Reader["GebruikerID"]), _Reader["Gebruikersnaam"].ToString());
-                        chatUser.Add(cuser);
-                        //chatlist.Add(hetzender);
-                    }
-                }
-            }
-            catch (OracleException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
 
         //public static List<string> openchats = new List<string>();
@@ -828,36 +797,56 @@
             return volunteers;
         }
 
-        public static void placeReview(int beoordeling, string opmerkingen, int needyID, int volunteerID)
+
+        public static List<Request> GetAllVisibleInterestedRequests(int userID)
         {
-            int this_reviewID = 0;
+            List<Request> requests = new List<Request>();
+
             try
             {
-                OpenConnection();
-                m_command = new OracleCommand();
-                m_command.Connection = m_conn;
-                m_command.CommandText = "SELECT COUNT(ReviewID) from Review";
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "SELECT * FROM HULPVRAAG WHERE ISVISIBLE = 'Y' AND HULPVRAAGID IN(SELECT HULPVRAAGID FROM INTRESSE WHERE GEBRUIKERID =:gebruikerid) ORDER BY HULPVRAAGID ";
+                m_command.Parameters.Add("gebruikerid", OracleDbType.Int32).Value = userID;
                 m_command.ExecuteNonQuery();
                 using (OracleDataReader _Reader = Database.Command.ExecuteReader())
                 {
-                    while (_Reader.Read())
+                    if (_Reader.HasRows)
                     {
-                        this_reviewID = Convert.ToInt32(_Reader["COUNT(ReviewID)"]) + 1;
+                        while (_Reader.Read())
+                        {
+                            bool a = false;
+                            if (Convert.ToString(_Reader["Urgent"]) == "Y")
+                            {
+                                a = true;
+                            }
+                            else if (Convert.ToString(_Reader["Urgent"]) == "N")
+                            {
+                                a = false;
+                            }
+                            CultureInfo provider = CultureInfo.InvariantCulture;
+                            string start = Convert.ToString(_Reader["STARTDATUM"]);
+                            string end = Convert.ToString(_Reader["EINDDATUM"]);
+                            DateTime startdate = DateTime.ParseExact(start, "HH:mm", provider);
+                            DateTime enddate = DateTime.ParseExact(end, "HH:mm", provider);
+                            Request request = new Request(Convert.ToInt32(_Reader["HULPVRAAGID"]), Convert.ToInt32(_Reader["GEBRUIKERID"]), _Reader["OMSCHRIJVING"].ToString(), a, _Reader["LOCATIE"].ToString(), Convert.ToInt32(_Reader["REISTIJD"]), _Reader["VERVOERTYPE"].ToString(), startdate, enddate, Convert.ToInt32(_Reader["AANTALVRIJWILLIGERS"]));
+
+                            if (requests.Contains(request) != true)
+                            {
+                                requests.Add(request);
+                            }
+
+                        }
                     }
                 }
-
-                m_command.CommandText = "INSERT INTO Review(ReviewID, Beoordeling, Opmerkingen, NeedyID, VolunteerID, ISREPORTED, ISVISIBLE) VALUES(:ReviewID, :Beoordeling, :Opmerkingen, :NeedyID, :VolunteerID, 'N', 'Y')";
-                Command.Parameters.Add("ReviewID", OracleDbType.Int32).Value = this_reviewID;
-                Command.Parameters.Add("Beoordeling", OracleDbType.Varchar2).Value = beoordeling.ToString();
-                Command.Parameters.Add("Opmerkingen", OracleDbType.Varchar2).Value = opmerkingen;
-                Command.Parameters.Add("NeedyID", OracleDbType.Int32).Value = acid;
-                Command.Parameters.Add("VolunteerID", OracleDbType.Int32).Value = volunteerID;
-                Command.ExecuteNonQuery();
             }
             catch (OracleException ex)
             {
+                Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
+            return requests;
         }
     }
 }
