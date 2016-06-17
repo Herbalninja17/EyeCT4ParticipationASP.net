@@ -30,6 +30,7 @@
         public static List<string> reportedChats = new List<string>();
         public static List<string> reportedRequests = new List<string>();
         public static List<string> reviewsRequests = new List<string>();
+        public static List<ChatUser> chatUser = new List<ChatUser>();
 
         /// Haalt het command-object op waarmee queries uitgevoerd kunnen worden.
         public static OracleCommand Command { get { return m_command; } }
@@ -173,6 +174,35 @@
                 Console.WriteLine(ex.Message);
             }
             return bericht;
+        }
+
+        public static void chatboxlist(int id)
+        {
+            //chathistory.Clear();
+            chatUser.Clear();
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT g.GebruikerID, g.Gebruikersnaam from Chat c JOIN Gebruiker g ON c.Zender = g.GebruikerID WHERE c.GebruikerID = :ID OR c.GebruikerID2 = :ID GROUP BY g.Gebruikersnaam, g.GebruikerID";
+                m_command.Parameters.Add("ID", OracleDbType.Varchar2).Value = id;
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        //hetzender = Convert.ToString(_Reader["Gebruikersnaam"]);
+                        ChatUser cuser = new ChatUser(Convert.ToInt32(_Reader["GebruikerID"]), _Reader["Gebruikersnaam"].ToString());
+                        chatUser.Add(cuser);
+                        //chatlist.Add(hetzender);
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         //public static List<string> openchats = new List<string>();
@@ -847,6 +877,38 @@
                 Console.WriteLine(ex.Message);
             }
             return requests;
+        }
+
+        public static void placeReview(int beoordeling, string opmerkingen, int needyID, int volunteerID)
+        {
+            int this_reviewID = 0;
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "SELECT COUNT(ReviewID) from Review";
+                m_command.ExecuteNonQuery();
+                using (OracleDataReader _Reader = Database.Command.ExecuteReader())
+                {
+                    while (_Reader.Read())
+                    {
+                        this_reviewID = Convert.ToInt32(_Reader["COUNT(ReviewID)"]) + 1;
+                    }
+                }
+
+                m_command.CommandText = "INSERT INTO Review(ReviewID, Beoordeling, Opmerkingen, NeedyID, VolunteerID, ISREPORTED, ISVISIBLE) VALUES(:ReviewID, :Beoordeling, :Opmerkingen, :NeedyID, :VolunteerID, 'N', 'Y')";
+                Command.Parameters.Add("ReviewID", OracleDbType.Int32).Value = this_reviewID;
+                Command.Parameters.Add("Beoordeling", OracleDbType.Varchar2).Value = beoordeling.ToString();
+                Command.Parameters.Add("Opmerkingen", OracleDbType.Varchar2).Value = opmerkingen;
+                Command.Parameters.Add("NeedyID", OracleDbType.Int32).Value = acid;
+                Command.Parameters.Add("VolunteerID", OracleDbType.Int32).Value = volunteerID;
+                Command.ExecuteNonQuery();
+            }
+            catch (OracleException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
