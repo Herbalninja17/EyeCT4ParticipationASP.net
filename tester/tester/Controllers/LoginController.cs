@@ -16,6 +16,17 @@
         [HttpPost]
         public ActionResult Index(string username, string password)
         {
+            //RFID rfid = new RFID();
+            //if (rfid.Attached == true)
+            //{
+            //    rfid = new RFID();
+            //    rfid.openCmdLine(rfid);
+            //    rfid.Tag += new TagEventHandler(rfid_Tag);
+            //    rfid.Attach += new AttachEventHandler(rfid_Attach);
+            //    rfid.TagLost += new TagEventHandler(rfid_TagLost);
+            //    rfid.Detach += new DetachEventHandler(rfid_Detach);
+            //}
+            //ViewBag.rfid = rfid.tag;
             ViewBag.loginfail = string.Empty;
             ViewBag.user = username;
             if ("Rechard".Equals(username) == true)
@@ -58,6 +69,17 @@
         [HttpPost]
         public ActionResult Register(string type, string username, string password, string email, string name, string address, string city, string phone, string aboutme)
         {
+            //RFID rfid = new RFID();
+            //if (rfid.Attached == true)
+            //{
+            //    rfid = new RFID();
+            //    rfid.openCmdLine(rfid);
+            //    rfid.Tag += new TagEventHandler(rfid_Tag);
+            //    rfid.Attach += new AttachEventHandler(rfid_Attach);
+            //    rfid.TagLost += new TagEventHandler(rfid_TagLost);
+            //    rfid.Detach += new DetachEventHandler(rfid_Detach);
+            //}
+            //ViewBag.rfid = rfid.tag;
             Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N", aboutme);
             return this.View();
         }
@@ -148,5 +170,7 @@
             }
 
         }
+
+      
     }
 }
