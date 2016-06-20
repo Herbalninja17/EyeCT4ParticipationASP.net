@@ -171,6 +171,16 @@
 
         }
 
-      
+        [HttpGet]
+        public ActionResult Uitloggen()
+        {
+            Database.ac = string.Empty;
+            Database.acid = 0;
+            Database.acnaam = string.Empty;
+            Database.user = null;
+            Database.userBekijken = null;
+            Database.online = false;
+            return this.View();
+        }
     }
 }
