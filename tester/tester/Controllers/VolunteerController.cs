@@ -20,7 +20,7 @@
         
         public ActionResult showInterest(int RequestID)
         {
-            Database.intresse(RequestID, tester.Models.Database.acid);
+            Database.interesse(RequestID, Database.acid);
             return this.RedirectToAction("VolunteerIntrested", "Volunteer");
         }
 
@@ -34,7 +34,7 @@
         [HttpGet]
         public ActionResult VolunteerIntrested()
         {
-            var requests = Database.GetAllVisibleRequests(tester.Models.Database.acid);
+            var requests = Database.GetAllVisibleRequests(Database.acid);
             return this.View(requests);
         }
 

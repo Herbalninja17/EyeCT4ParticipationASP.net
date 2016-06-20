@@ -143,12 +143,13 @@
         } //goodluck! </Rechard>  
 
         // CHATHALEN <RECHARD>
-        public static string chatbox(int needy, int volunteer)
+        public static bool chatbox(int needy, int volunteer)
         {
             chathistory.Clear();
             string bericht = string.Empty;
             string hetzender = string.Empty;
             string chatstring = string.Empty;
+            bool ok = false;
             try
             {
                 OpenConnection();
@@ -167,13 +168,15 @@
                         chatstring = hetzender + ": " + bericht;
                         chathistory.Add(chatstring);
                     }
+                    ok = true;
                 }
             }
             catch (OracleException ex)
             {
+                ok = false;
                 Console.WriteLine(ex.Message);
             }
-            return bericht;
+            return ok;
         }
 
         public static void chatboxlist(int id)
@@ -240,8 +243,9 @@
         //}
 
         // CHAT INSERTS <RECHARD>
-        public static void chatsend(int needy, int volunteer, string bericht, int zender)
+        public static bool chatsend(int needy, int volunteer, string bericht, int zender)
         {
+            bool ok = false;
             int AutoID = 0;
             try
             {
@@ -264,12 +268,15 @@
                 m_command.Parameters.Add("GebruikerID2", OracleDbType.Int32).Value = volunteer;
                 m_command.Parameters.Add("Bericht", OracleDbType.Varchar2).Value = bericht;
                 m_command.ExecuteNonQuery();
+                ok = true;
             }
             catch (OracleException ex)
             {
+                ok = false;
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
+            return ok;
         }
 
         // Profile <OLAF>
@@ -402,9 +409,10 @@
             return requests;
         }
 
-        public static void placeARequest(int accountid, string omschrijving, string locatie, int reistijd,
+        public static bool placeARequest(int accountid, string omschrijving, string locatie, int reistijd,
             string vervoerType, string startDatum, string eindDatum, string urgent, int aantalVrijwilligers)
         {
+            bool ok = false;
             int this_hulpvraagID = 0;
             try
             {
@@ -434,14 +442,15 @@
                 Command.Parameters.Add("Urgent", OracleDbType.Char).Value = urgent;
                 Command.Parameters.Add("AantalVrijwilligers", OracleDbType.Int32).Value = aantalVrijwilligers;
                 Command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountid;
-
                 Command.ExecuteNonQuery();
+                ok = true;
             }
             catch (OracleException ex)
             {
-
+                ok = false;
                 Console.WriteLine(ex.Message);
             }
+            return ok;
         }
 
         //=============================================================================================================
@@ -497,9 +506,11 @@
                 //Command.Parameters.Add("1", OracleDbType.Int32).Value = Convert.ToString(ID);
                 //Command.Parameters.Add("COLUMN", OracleDbType.Varchar2).Value = COLUMN;
                 m_command.ExecuteNonQuery();
+                ok = true;
             }
             catch (OracleException ex)
             {
+                ok = false;
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
@@ -776,8 +787,9 @@
         }
 
         //melvin Add 1 user in tabel intresse toevoegen 
-        public static void intresse(int RequestID, int accountID)
+        public static bool interesse(int RequestID, int accountID)
         {
+            bool ok = false;
             try
             {
                 OpenConnection();                   // om connection open te maken
@@ -787,12 +799,15 @@
                 m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = RequestID;
                 m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountID;
                 m_command.ExecuteNonQuery();
+                ok = true;
             }
             catch (OracleException ex)
             {
+                ok = false;
                 Database.CloseConnection();
                 Console.WriteLine(ex.Message);
             }
+            return ok;
         }
 
         public static List<Volunteer> GetVolunteers(int HulpvraagID)
@@ -879,8 +894,9 @@
             return requests;
         }
 
-        public static void placeReview(int beoordeling, string opmerkingen, int needyID, int volunteerID)
+        public static bool placeReview(int beoordeling, string opmerkingen, int needyID, int volunteerID)
         {
+            bool ok = false;
             int this_reviewID = 0;
             try
             {
@@ -901,14 +917,39 @@
                 Command.Parameters.Add("ReviewID", OracleDbType.Int32).Value = this_reviewID;
                 Command.Parameters.Add("Beoordeling", OracleDbType.Varchar2).Value = beoordeling.ToString();
                 Command.Parameters.Add("Opmerkingen", OracleDbType.Varchar2).Value = opmerkingen;
-                Command.Parameters.Add("NeedyID", OracleDbType.Int32).Value = acid;
+                Command.Parameters.Add("NeedyID", OracleDbType.Int32).Value = needyID;
                 Command.Parameters.Add("VolunteerID", OracleDbType.Int32).Value = volunteerID;
                 Command.ExecuteNonQuery();
+                ok = true;
             }
             catch (OracleException ex)
             {
                 Console.WriteLine(ex.Message);
             }
+            return ok;
+        }
+
+        public static bool geenInteresse(int RequestID, int accountID)
+        {
+            bool ok = false;
+            try
+            {
+                OpenConnection();                   // om connection open te maken
+                m_command = new OracleCommand();    // hoef eingelijk niet doordat het all in OpenConnection() zit
+                m_command.Connection = m_conn;      // een connection maken met het command
+                m_command.CommandText = "DELETE FROM INTRESSE WHERE HULPVRAAGID = :HULPVRAAGID AND GebruikerID = :GebruikerID";
+                m_command.Parameters.Add("HULPVRAAGID", OracleDbType.Int32).Value = RequestID;
+                m_command.Parameters.Add("GebruikerID", OracleDbType.Int32).Value = accountID;
+                m_command.ExecuteNonQuery();
+                ok = true;
+            }
+            catch (OracleException ex)
+            {
+                ok = false;
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
         }
     }
 }
