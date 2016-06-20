@@ -8,21 +8,6 @@
 
     public class Request
     {
-        public Request(int ID, int needyID, string description, bool urgency, string location, int traveltime, string transporttype,
-            DateTime startdate, DateTime enddate, int totalvolunteers)
-        {
-            this.requestID = ID;
-            this.needyID = needyID;
-            this.description = description;
-            this.urgency = urgency;
-            this.location = location;
-            this.travelTime = traveltime;
-            this.transportType = transporttype;
-            this.startDate = startdate;
-            this.endDate = enddate;
-            this.totalVolunteer = totalvolunteers;
-        }
-
         public int requestID { get; set; }
         public int needyID { get; set; }
 
@@ -53,6 +38,22 @@
         public int totalVolunteer { get; set; }
         public string reactionList { get; set; }
         public bool reported { get; set; }
+        public Request(int ID, int needyID, string description, bool urgency, string location, int traveltime, string transporttype,
+            DateTime startdate, DateTime enddate, int totalvolunteers)
+        {
+            this.requestID = ID;
+            this.needyID = needyID;
+            this.description = description;
+            this.urgency = urgency;
+            this.location = location;
+            this.travelTime = traveltime;
+            this.transportType = transporttype;
+            this.startDate = startdate;
+            this.endDate = enddate;
+            this.totalVolunteer = totalvolunteers;
+        }
+
+
 
         public override string ToString()
         {

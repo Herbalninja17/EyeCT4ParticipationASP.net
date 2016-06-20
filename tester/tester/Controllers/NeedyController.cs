@@ -24,7 +24,7 @@
         }
 
         [HttpPost]
-        public ActionResult Requests(string description, string location, int totalVolunteer, string transportType, int travelTime, string startDate, string endDate, string urgency)
+        public ActionResult Requests(string description="", string location="", int totalVolunteer=1, string transportType="", int travelTime=1, string startDate="", string endDate="", string urgency="")
         {
             if (urgency == "true")
             {
@@ -34,6 +34,7 @@
             {
                 urgency = "N";
             }
+       
             Database.placeARequest(Database.acid, description, location, travelTime, transportType, startDate, endDate, urgency, totalVolunteer);
             return this.View();
         }
