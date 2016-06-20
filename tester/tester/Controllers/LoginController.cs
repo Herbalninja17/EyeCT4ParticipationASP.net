@@ -81,7 +81,7 @@
             //}
             //ViewBag.rfid = rfid.tag;
             Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N", aboutme);
-            return this.View();
+            return this.RedirectToAction("Index", "Login");
         }
 
         [HttpGet]
@@ -171,6 +171,16 @@
 
         }
 
-      
+        [HttpGet]
+        public ActionResult Uitloggen()
+        {
+            Database.ac = string.Empty;
+            Database.acid = 0;
+            Database.acnaam = string.Empty;
+            Database.user = null;
+            Database.userBekijken = null;
+            Database.online = false;
+            return this.View();
+        }
     }
 }
