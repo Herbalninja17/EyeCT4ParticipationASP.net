@@ -81,7 +81,7 @@
             //}
             //ViewBag.rfid = rfid.tag;
             Database.RegesterUser(username, password, type, email, name, address, city, Convert.ToInt32(phone), "M", string.Empty, "N", "N", aboutme);
-            return this.View();
+            return this.RedirectToAction("Index", "Login");
         }
 
         [HttpGet]
