@@ -54,9 +54,16 @@
 
         public ActionResult reportChat(string chat)
         {
-            tester.Models.Database.getSelected("CHAT", chat, "CHATID", "BERICHT");
-            tester.Models.Database.alterYorN("CHAT", tester.Models.Database.ItemIDSelected, "CHATID", "ISREPORTED", "Y");
-            return View();
+            // m_command.CommandText = "UPDATE " + COLUMN + " SET " + visibleOrReported + " = '" + YorN + "' WHERE " + IDFromWich + "=" + ID;
+            Database.alterYorNChat("CHAT", chat, "BERICHT", "ISREPORTED", "Y");
+            return this.RedirectToAction("Chatbox", "Chat");
         }
+
+        //public ActionResult reportRequest(int RequestID)
+        //{
+            
+        //    Database.alterYorN("HULPVRAAG", RequestID, "HULPVRAAGID", "ISREPORTED", "Y");
+        //    return this.RedirectToAction("VolunteerIntrested", "Volunteer");
+        //}
     }
 }

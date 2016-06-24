@@ -517,6 +517,33 @@
             return ok;
         }
 
+        // Update table IsVisible/IsReported chat <Raphael>
+        public static bool alterYorNChat(string COLUMN, string ID, string IDFromWich, string visibleOrReported, string YorN)
+        {
+            bool ok = false;
+
+            try
+            {
+                OpenConnection();
+                m_command = new OracleCommand();
+                m_command.Connection = m_conn;
+                m_command.CommandText = "UPDATE " + COLUMN + " SET " + visibleOrReported + " = '" + YorN + "' WHERE " + IDFromWich + "=" + ID;
+                //Command.Parameters.Add("Y", OracleDbType.Varchar2).Value = YorN;
+                //Command.Parameters.Add("IDFromWich", OracleDbType.Varchar2).Value = IDFromWich;
+                //Command.Parameters.Add("1", OracleDbType.Int32).Value = Convert.ToString(ID);
+                //Command.Parameters.Add("COLUMN", OracleDbType.Varchar2).Value = COLUMN;
+                m_command.ExecuteNonQuery();
+                ok = true;
+            }
+            catch (OracleException ex)
+            {
+                ok = false;
+                Database.CloseConnection();
+                Console.WriteLine(ex.Message);
+            }
+            return ok;
+        }
+
         // GetReviews admin <Raphael>
         public static bool getReviewAdmin()
         {
