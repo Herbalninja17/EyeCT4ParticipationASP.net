@@ -527,7 +527,7 @@
                 OpenConnection();
                 m_command = new OracleCommand();
                 m_command.Connection = m_conn;
-                m_command.CommandText = "UPDATE " + COLUMN + " SET " + visibleOrReported + " = '" + YorN + "' WHERE " + IDFromWich + "=" + ID;
+                m_command.CommandText = "UPDATE " + COLUMN + " SET " + visibleOrReported + " = '" + YorN + "' WHERE " + IDFromWich + "= '" + ID + "'";
                 //Command.Parameters.Add("Y", OracleDbType.Varchar2).Value = YorN;
                 //Command.Parameters.Add("IDFromWich", OracleDbType.Varchar2).Value = IDFromWich;
                 //Command.Parameters.Add("1", OracleDbType.Int32).Value = Convert.ToString(ID);

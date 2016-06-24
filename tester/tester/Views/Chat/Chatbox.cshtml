@@ -29,7 +29,8 @@
                     foreach (string chat in tester.Models.Database.chathistory)
                     {
 
-                        @chat.ToString() <br />
+                        @chat.ToString() 
+                        <a href="@Url.Action("reportChat", "Chat", new { chat = @chat.ToString() })">Report</a><br />
                     }
                 }
                 @ViewBag.nochat
@@ -59,9 +60,3 @@
     <br />
     <br />
 }
-
-sddsd
-
-
-
-

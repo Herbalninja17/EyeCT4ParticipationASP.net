@@ -55,8 +55,11 @@
         public ActionResult reportChat(string chat)
         {
             // m_command.CommandText = "UPDATE " + COLUMN + " SET " + visibleOrReported + " = '" + YorN + "' WHERE " + IDFromWich + "=" + ID;
-            Database.alterYorNChat("CHAT", chat, "BERICHT", "ISREPORTED", "Y");
-            return this.RedirectToAction("Chatbox", "Chat");
+            int begin = chat.IndexOf(":") + 2;
+            int eind = chat.Length - begin;
+            string bericht = chat.Substring(begin, eind);
+            Database.alterYorNChat("CHAT", bericht, "BERICHT", "ISREPORTED", "Y");
+            return this.RedirectToAction("Chatbox", "Chat" , new { id = 0 });
         }
 
         //public ActionResult reportRequest(int RequestID)
