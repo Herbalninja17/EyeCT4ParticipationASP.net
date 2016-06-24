@@ -137,7 +137,8 @@ textarea {
 
 .chatlist
 {
-    background-color: lightblue;
+    border-right: solid 1px;
+    background-color: aliceblue;
     height: 98%;
     width: 25%;
     float: left;
@@ -155,7 +156,7 @@ textarea {
 
 .chat
 {
-    background-color: lightcoral;
+    background-color: white;
     float: right;
     height: 90%;
     width: 75%;
@@ -170,7 +171,7 @@ textarea {
     float: left;
     height: 90%;
     border: 0;
-    border-top: 1px solid;
+    /*border-top: 1px solid;*/
 }
 
 .submitbtn
@@ -189,11 +190,17 @@ textarea {
     width: 100%;
 }
 
-.r2
+.r2 
 {
+   
     width: 20%;
     float: right;
     height: 100%;
+}
+
+.r2 input
+{
+   background-color: aliceblue;
 }
 
 .r1
